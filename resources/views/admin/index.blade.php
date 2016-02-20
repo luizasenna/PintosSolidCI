@@ -2,26 +2,26 @@
 
 {{-- Page title --}}
 @section('title')
-Solid CI 
+Solid CI
 @parent
 @stop
 
 {{-- page level styles --}}
 @section('header_styles')
-    
+
     <link href="{{ asset('assets/vendors/fullcalendar/css/fullcalendar.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/pages/calendar_custom.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" media="all" href="{{ asset('assets/vendors/jvectormap/jquery-jvectormap.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendors/animate/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/only_dashboard.css') }}" />
-    
+
 @stop
 
 {{-- Page content --}}
 @section('content')
 
 <section class="content-header">
-    <h1>Equipamentos do Centro de Informática da Pintos </h1>
+    <h1>Equipamentos do Centro de Informática da Pintos</h1>
     <ol class="breadcrumb">
         <li class="active">
             <a href="#">
@@ -35,18 +35,18 @@ Solid CI
     <!--/row-->
     <div class="row ">
 
-   
+
     </div>
     <div class="clearfix"></div>
- 
-        
+
+
 </section>
-        
+
 @stop
 
 {{-- page level scripts --}}
 @section('footer_scripts')
-    
+
     <!--  todolist-->
     <script src="{{ asset('assets/js/todolist.js') }}" ></script>
     <!-- EASY PIE CHART JS -->
@@ -68,6 +68,6 @@ Solid CI
     <script src="{{ asset('assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js') }}" ></script>
     <script src="{{ asset('assets/vendors/jscharts/Chart.js') }}" ></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"  type="text/javascript"></script>
-    
+
 
 @stop

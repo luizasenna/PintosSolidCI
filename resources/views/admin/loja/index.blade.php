@@ -38,7 +38,7 @@ Mostra Loja
 				</form>
 			</div>
 			<div class="col-md-8">
-				<a href="nova" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-plus"></span> Inserir</a>
+				<a href="{{ route('loja_new') }}" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-plus"></span> Inserir</a>
 			</div>
 		</div>
 

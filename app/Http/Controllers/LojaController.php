@@ -43,27 +43,9 @@ class LojaController extends Controller
 	}
 
 
-	public function store(Request $request)
-	{
-		//
-	}
-
 	public function show($id)
 	{
 		return view('admin.loja.mostra', ['loja' => Loja::findOrFail($id), 'loja_status' => self::loja_status]);
-	}
-
-	public function busca()
-	{
-		// $nome = Request::input('nome');
-		//$lojas = DB::select("select * from lojas where descricao = '?'", [$nome]);
-		//$lojas = Loja::where('descricao', '=', $nome)->get();
-		//$lojas = Loja::like('descricao', $nome)->get();
-		// $lojas = Loja::where('descricao', 'LIKE', '%'.$nome.'%')->get();
-		// if(empty($lojas)) {
-			// return "Não existe nada parecido com a sua busca";
-		// }
-		// return view('admin.loja.index')->with('lojas', $lojas);
 	}
 
 	public function edit($id)
@@ -80,7 +62,7 @@ class LojaController extends Controller
 		return redirect()->action('LojaController@index')->with('status', 'Loja atualizada com sucesso');
 	}
 
-	public function destroy($id)
+	public function delete($id)
 	{
 		Loja::findOrFail($id)->delete();
 

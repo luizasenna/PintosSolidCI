@@ -64,19 +64,18 @@ Route::group(array('prefix' => 'admin'), function () {
 	Route::get('loja/lista', 'LojaController@index')->name('loja_index');
 	Route::get('loja/mostra/{id}', 'LojaController@show')->name('loja_show');
 	Route::get('loja/edita/{id}', 'LojaController@edit')->name('loja_edit');
-	Route::get('loja/deletar/{id}', 'LojaController@destroy')->name('loja_delete');
-
-	Route::get('loja/buscarloja', 'LojaController@busca');
+	Route::get('loja/deletar/{id}', 'LojaController@delete')->name('loja_delete');
 	// END Routes for Loja
 
 	// Routes for Setor
-	Route::get('setor/novo', 'SetorController@create');
+	Route::post('setor/adiciona', 'SetorController@add')->name('setor_adiciona');
+	Route::post('setor/salva', 'SetorController@update')->name('setor_salva');
 
-	Route::get('setor/adiciona', 'SetorController@adiciona');
-
-	Route::get('setor/lista', 'SetorController@index');
-
-	Route::get('setor/buscarsetor', 'SetorController@busca');
+	Route::get('setor/novo', 'SetorController@create')->name('setor_new');
+	Route::get('setor/lista', 'SetorController@index')->name('setor_index');
+	Route::get('setor/mostra/{id}', 'SetorController@show')->name('setor_show');
+	Route::get('setor/edita/{id}', 'SetorController@edit')->name('setor_edit');
+	Route::get('setor/deletar/{id}', 'SetorController@delete')->name('setor_delete');
 	// END Routes for Setor
 
 	Route::get('marca/novo', 'MarcaController@create');

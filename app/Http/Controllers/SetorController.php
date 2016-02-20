@@ -14,101 +14,60 @@ use Illuminate\Support\Facades\DB;
 
 class SetorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    const setor_status = [
+        0 => 'Ativo',
+        1 => 'Inativo'
+    ];
+
     public function index()
     {
-       
-		$setores = Setor::all();
-		return view('admin.setor.index')->with('setores', $setores);
+        $filter = "";
+
+        if ( Request::exists('filter') ) {
+            $filter = Request::input('filter');
+        }
+
+        $setores = Setor::where('nome', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->get();
+
+		return view('admin.setor.index', ['setores' => $setores, 'filter' => $filter, 'setor_status' => self::setor_status]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-		$lojas = Loja::select('descricao');
-        return view('admin.setor.insere')->with('lojas', $lojas);
+        $lojas = Loja::all();
+        return view('admin.setor.insere', ['lojas' => $lojas, 'setor_status' => self::setor_status]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-     
-    public function adiciona()
+    public function add()
 	{
-		
-		
-		 $nome = Request::input('nome');
-		 $idloja = Request::input('idloja');
-		 $status = Request::input('status');
-		// $created_at = date("Y-m-d");
-		 
-		  DB::insert('insert into setores values (null, ?, ?, ?, null,null)', 
-	    	array($nome, $status, $idloja));
+        $setor = Setor::create(Request::all());
 
-		 $setores = Setor::all();
-		return view('admin.setor.index')->with('setores', $setores);
-		
-	} 
-     
-     
-    public function store(Request $request)
-    {
-        //
-    }
+        return redirect()->action('SetorController@index')->with('status', 'Setor adicionado com sucesso');
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        return view('admin.setor.mostra', ['setor' => Setor::findOrFail($id), 'setor_status' => self::setor_status]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        return view('admin.setor.edita', ['setor' => Setor::findOrFail($id), 'setor_status' => self::setor_status]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+        $setor = Setor::findOrFail(Request::input('id'));
+        $setor->fill(Request::all());
+        $setor->save();
+
+        return redirect()->action('SetorController@index')->with('status', 'Setor atualizado com sucesso');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        Setor::findOrFail($id)->delete();
+
+        return redirect()->action('SetorController@index')->with('status', 'Setor removido com sucesso');
     }
 }

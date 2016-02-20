@@ -140,7 +140,7 @@
                                 <span class="title">Painel</span>
                             </a>
                         </li>
-                        <li {!! (Request::is('admin/loja') || Request::is('admin/loja/lista') || Request::is('admin/loja/adiciona')? 'class="active"' : '') !!}>
+                        <li {!! (Request::is('admin/loja') || Request::is('admin/loja/lista') || Request::is('admin/loja/novo')? 'class="active"' : '') !!}>
                             <a href="#">
                                 <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C" data-loop="true"></i>
                                 <span class="title">Lojas</span>
@@ -161,7 +161,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li {!! (Request::is('admin/setores') || Request::is('admin/setores/lista') || Request::is('admin/setores/adiciona')? 'class="active"' : '') !!}>
+                        <li {!! (Request::is('admin/setor') || Request::is('admin/setor/lista') || Request::is('admin/setor/novo')? 'class="active"' : '') !!}>
                             <a href="#">
                                 <i class="livicon" data-name="medal" data-size="18" data-c="#6CC66C" data-hc="#6CC66C" data-loop="true"></i>
                                 <span class="title">Setores</span>
