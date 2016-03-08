@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Editar Loja
+Editar Setor
 @parent
 @stop
 
@@ -14,7 +14,7 @@ Editar Loja
 @section('content')
 
 <section class="content-header">
-    <h1>Editar Loja</h1>
+    <h1>Editar Setor</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('dashboard') }}">
@@ -23,8 +23,8 @@ Editar Loja
             </a>
         </li>
         <li>
-            <a href="{{ route('loja_index') }}">
-                Lojas
+            <a href="{{ route('setor_index') }}">
+                Setores
             </a>
         </li>
         <li class="active">
@@ -40,20 +40,20 @@ Editar Loja
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span class="panel-title">Dados da Loja</span>
+                    <span class="panel-title">Dados do Setor</span>
                 </div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" method="POST" action="{{ route('loja_salva') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('setor_salva') }}">
 
                         {{ csrf_field() }}
 
-                        <input type="hidden" name="last_id" value="{{ $entity->id }}">
+                        <input type="hidden" name="id" value="{{ $entity->id }}">
 
                         <div class="form-group">
-                            <label for="id" class="col-sm-2 control-label">Código</label>
+                            <label for="nome" class="col-sm-2 control-label">Nome</label>
                             <div class="col-sm-7">
-                                <input type="number" class="form-control" id="id" name="id" value="{{ $entity->id }}">
+                                <input type="text" class="form-control" name="nome" value="{{ $entity->nome }}">
                             </div>
 
                             <label for="description" class="col-sm-1 control-label">Status</label>
@@ -67,10 +67,14 @@ Editar Loja
                         </div>
 
                         <div class="form-group">
-                            <label for="description" class="col-sm-2 control-label">Descrição</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="descricao" value="{{ $entity->descricao }}">
-                            </div>
+                          <label for="idloja" class="col-sm-2 control-label">Loja</label>
+                          <div class="col-sm-10">
+                            <select class="form-control" name="idloja">
+                              @foreach($lojas as $loja)
+                                <option value="{{ $loja->id }}" {{ $entity->loja == $loja ? 'selected' : '' }}>{{ $loja->descricao }}</option>
+                              @endforeach
+                            </select>
+                          </div>
                         </div>
 
                         <div class="form-group">

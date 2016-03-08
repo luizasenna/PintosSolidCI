@@ -2,38 +2,32 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Loja;
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Controllers\MainController;
 
-class LojaController extends Controller
+class LojaController extends MainController
 {
-	const loja_status = [
-		0 => 'Ativa',
-		1 => 'Inativa'
-	];
-
 	public function index()
 	{
-        $filter = '';
+        $filter = Request::exists('filter') ? Request::input('filter') : '';
 
-        if ( Request::exists('filter') ) {
-            $filter = Request::input('filter');
-        }
+        $entities = Loja::where('descricao', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->paginate(15);
 
-        $lojas = Loja::where('descricao', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->get();
-
-		return view('admin.loja.index', [ 'lojas' => $lojas, 'filter' => $filter, 'loja_status' => self::loja_status ]);
+		return view('admin.loja.index', [
+			'entities' => $entities,
+			'filter' => $filter,
+			'entity_status' => self::entity_status
+		]);
 	}
 
 	public function create()
 	{
-		return view('admin.loja.insere', ['loja_status' => self::loja_status]);
+		return view('admin.loja.insere', ['entity_status' => self::entity_status]);
 	}
 
 	public function add()
@@ -45,12 +39,18 @@ class LojaController extends Controller
 
 	public function show($id)
 	{
-		return view('admin.loja.mostra', ['loja' => Loja::findOrFail($id), 'loja_status' => self::loja_status]);
+		return view('admin.loja.mostra', [
+			'entity' => Loja::findOrFail($id),
+			'entity_status' => self::entity_status
+		]);
 	}
 
 	public function edit($id)
 	{
-		return view('admin.loja.edita', ['loja' => Loja::findOrFail($id), 'loja_status' => self::loja_status]);
+		return view('admin.loja.edita', [
+			'entity' => Loja::findOrFail($id),
+			'entity_status' => self::entity_status
+		]);
 	}
 
 	public function update()

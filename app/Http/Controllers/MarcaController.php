@@ -10,78 +10,64 @@ use App\Marca;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 
-class MarcaController extends Controller
+use App\Http\Controllers\MainController;
+
+class MarcaController extends MainController
 {
-    
     public function index()
     {
-        $marcas = Marca::all();
-		return view('admin.marca.index')->with('marcas', $marcas);
-    }
+        $filter = Request::exists('filter') ? Request::input('filter') : '';
 
+        $entities = Marca::where('descricao', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->paginate(15);
+
+        return view('admin.marca.index', [
+            'entities' => $entities,
+            'filter' => $filter,
+            'entity_status' => self::entity_status
+        ]);
+    }
 
     public function create()
     {
-        return view('admin.marca.insere');
+        return view('admin.marca.insere', ['entity_status' => self::entity_status]);
     }
 
-    public function adiciona()
+    public function add()
 	{
-		
-		 $descricao = Request::input('Nome');
-		 $status = Request::input('status');
-		 $observacoes = Request::input('observacoes');
-		 $created_at = Request::input('created_at');
-		 
-		 DB::insert('insert into marcas values (null, ?, ?, ?, ?,null)', 
-	    	array($descricao, $status, $observacoes, $created_at));
+        $marca = Marca::create(Request::all());
 
-		 $marcas = Marca::all();
-		return view('admin.marca.index')->with('marcas', $marcas);
-		
-	}
-    
-    
-    public function busca()
-	{   
-		$nome = Request::input('nome');
-		$marcas = Marca::where('descricao', 'LIKE', '%'.$nome.'%')->get();
-		if(empty($marcas)) {
-			return "Não existe nada parecido com a sua busca";
-		}
-		return view('admin.marca.index')->with('marcas', $marcas);
-		
+        return redirect()->action('MarcaController@index')->with('status', 'Marca adicionada com sucesso');
 	}
 
-    
-    
-    
-    public function store(Request $request)
-    {
-        //
-    }
-
-   
     public function show($id)
     {
-        //
+        return view('admin.marca.mostra', [
+            'entity' => Marca::findOrFail($id),
+            'entity_status' => self::entity_status
+        ]);
     }
 
-    
     public function edit($id)
     {
-        //
+        return view('admin.marca.edita', [
+            'entity' => Marca::findOrFail($id),
+            'entity_status' => self::entity_status
+        ]);
     }
 
-    
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+        $marca = Marca::findOrFail(Request::input('id'));
+        $marca->fill(Request::all());
+        $marca->save();
+
+        return redirect()->action('MarcaController@index')->with('status', 'Marca atualizado com sucesso');
     }
 
-   
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        Marca::findOrFail($id)->delete();
+
+        return redirect()->action('MarcaController@index')->with('status', 'Marca removida com sucesso');
     }
 }

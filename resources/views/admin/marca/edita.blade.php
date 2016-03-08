@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Editar Loja
+Editar Marca
 @parent
 @stop
 
@@ -14,7 +14,7 @@ Editar Loja
 @section('content')
 
 <section class="content-header">
-    <h1>Editar Loja</h1>
+    <h1>Editar Marca</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('dashboard') }}">
@@ -23,8 +23,8 @@ Editar Loja
             </a>
         </li>
         <li>
-            <a href="{{ route('loja_index') }}">
-                Lojas
+            <a href="{{ route('marca_index') }}">
+                Marcas
             </a>
         </li>
         <li class="active">
@@ -40,20 +40,20 @@ Editar Loja
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span class="panel-title">Dados da Loja</span>
+                    <span class="panel-title">Dados da Marca</span>
                 </div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" method="POST" action="{{ route('loja_salva') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('marca_salva') }}">
 
                         {{ csrf_field() }}
 
-                        <input type="hidden" name="last_id" value="{{ $entity->id }}">
+                        <input type="hidden" name="id" value="{{ $entity->id }}">
 
                         <div class="form-group">
-                            <label for="id" class="col-sm-2 control-label">Código</label>
+                            <label for="description" class="col-sm-2 control-label">Descrição</label>
                             <div class="col-sm-7">
-                                <input type="number" class="form-control" id="id" name="id" value="{{ $entity->id }}">
+                                <input type="text" class="form-control" name="descricao" value="{{ $entity->descricao }}">
                             </div>
 
                             <label for="description" class="col-sm-1 control-label">Status</label>
@@ -67,10 +67,10 @@ Editar Loja
                         </div>
 
                         <div class="form-group">
-                            <label for="description" class="col-sm-2 control-label">Descrição</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="descricao" value="{{ $entity->descricao }}">
-                            </div>
+                          <label for="observacoes" class="col-sm-2 control-label">Observações</label>
+                          <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" id="observacoes" name="observacoes">{{ $entity->observacoes }}</textarea>
+                          </div>
                         </div>
 
                         <div class="form-group">

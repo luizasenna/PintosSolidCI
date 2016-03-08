@@ -6,101 +6,79 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Fornecedor; 
+use App\Fornecedor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 
-class FornecedorController extends Controller
+use App\Http\Controllers\MainController;
+
+class FornecedorController extends MainController
 {
-   
-     public function index()
+    const fornecedor_estados = [
+        'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal',
+        'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul',
+        'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+        'Rio Grande do Norte', 'Rio Grando do Sul', 'Rondônia', 'Roraima', 'Santa Catarina',
+        'São Paulo', 'Sergipe', 'Tocantins'
+    ];
+
+    public function index()
     {
-        $fornecedores = Fornecedor::all();
-		return view('admin.fornecedor.index')->with('fornecedores', $fornecedores);
+        $filter = Request::exists('filter') ? Request::input('filter') : '';
+
+        $entities = Fornecedor::where('nome', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->paginate(15);
+
+		return view('admin.fornecedor.index', [
+            'entities' => $entities,
+            'filter' => $filter,
+            'entity_status' => self::entity_status
+        ]);
     }
 
-   
-     public function create()
+    public function create()
     {
-        return view('admin.fornecedor.insere');
+        return view('admin.fornecedor.insere', [
+            'entity_status' => self::entity_status,
+            'fornecedor_estados' => self::fornecedor_estados
+        ]);
     }
 
-	 public function adiciona()
-	{
-		
-		 $nome = Request::input('nome');
-		 $status = Request::input('status');
-		 $observacoes = Request::input('observacoes');
-		 $created_at = Request::input('created_at');
-		 $ddd1 = Request::input('ddd1');
-		 $telefone1 = Request::input('telefone1');
-		 $ddd2 = Request::input('ddd2');
-	     $telefone2 = Request::input('telefone2');
-		 $ddd3 = Request::input('ddd3');
-		 $telefone3 = Request::input('telefone3');
-		 $logradouro = Request::input('logradouro');
-		 $numero = Request::input('numero');
-		 $complemento = Request::input('complemento');
-		 $bairro = Request::input('bairro');
-		 $cidade = Request::input('cidade');
-		 $estado = Request::input('estado');
-		 $cep = Request::input('cep');
-		 $status = Request::input('status');
-		 
-	 		
-		 
-		 DB::insert('insert into fornecedores values (null, ?, ?, ? ,?, ?, 
-		 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, ?)', 
-	    	array($nome, $logradouro, $numero, $complemento, $bairro, $cidade, $estado, $cep,  $observacoes, $ddd1, 
-	    	$telefone1, $ddd2, $telefone2, $ddd3, $telefone3, $created_at, $status));
+    public function add() {
+        $fornecedor = Fornecedor::create(Request::all());
 
-		 $fornecedores = Fornecedor::all();
-		 return view('admin.fornecedor.index')->with('fornecedores', $fornecedores);
-		
-	}
-
-	public function busca()
-	{   
-		$forne = Request::input('nome');
-		$fornecedores = Fornecedor::where('nome', 'LIKE', '%'.$forne.'%')->get();
-		if(empty($fornecedores)) {
-			return "Não existe nada parecido com a sua busca";
-		}
-		return view('admin.fornecedor.index')->with('fornecedores', $fornecedores);
-		
-	}
-
-
-    
-    public function store(Request $request)
-    {
-        //
+        return redirect()->action('FornecedorController@index')->with('status', 'Fornecedor adicionado com sucesso');
     }
 
-
-
-
-   
     public function show($id)
     {
-        //
+        return view('admin.fornecedor.mostra', [
+            'entity' => Fornecedor::findOrFail($id),
+            'entity_status' => self::entity_status
+        ]);
     }
 
-    
     public function edit($id)
     {
-        //
+        return view('admin.fornecedor.edita', [
+            'entity' => Fornecedor::findOrFail($id),
+            'entity_status' => self::entity_status,
+            'fornecedor_estados' => self::fornecedor_estados
+        ]);
     }
 
-   
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+        $fornecedor = Fornecedor::findOrFail(Request::input('id'));
+        $fornecedor->fill(Request::all());
+        $fornecedor->save();
+
+        return redirect()->action('FornecedorController@index')->with('status', 'Fornecedor atualizado com sucesso');
     }
 
-   
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        Fornecedor::findOrFail($id)->delete();
+
+        return redirect()->action('FornecedorController@index')->with('status', 'Fornecedor removido com sucesso');
     }
 }

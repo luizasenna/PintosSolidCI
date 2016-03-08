@@ -50,25 +50,25 @@ Inserir Loja
 
 						<div class="form-group">
 							<label for="id" class="col-sm-2 control-label">Código</label>
-							<div class="col-sm-10">
+							<div class="col-sm-7">
 								<input type="number" class="form-control" id="id" name="id">
 							</div>
+
+							<label for="description" class="col-sm-1 control-label">Status</label>
+							<div class="col-sm-2">
+								<select class="form-control" name="status">
+									@foreach($entity_status as $key => $value)
+										<option value="{{ $key }}">{{ $value }}</option>
+									@endforeach
+								</select>
+							</div>
+
 						</div>
 
 						<div class="form-group">
 							<label for="description" class="col-sm-2 control-label">Descrição</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="description" name="descricao">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="description" class="col-sm-2 control-label">Status</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="status">
-									<option value="0">{{ $loja_status[0] }}</option>
-									<option value="1">{{ $loja_status[1] }}</option>
-								</select>
 							</div>
 						</div>
 

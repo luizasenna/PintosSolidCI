@@ -50,8 +50,17 @@ Inserir Setor
 
             <div class="form-group">
               <label for="nome" class="col-sm-2 control-label">Nome</label>
-              <div class="col-sm-10">
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="nome" name="nome">
+              </div>
+
+              <label for="status" class="col-sm-1 control-label">Status</label>
+              <div class="col-sm-2">
+                <select class="form-control" name="status">
+                  @foreach($entity_status as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
 
@@ -62,16 +71,6 @@ Inserir Setor
                   @foreach($lojas as $loja)
                     <option value="{{ $loja->id }}">{{ $loja->descricao }}</option>
                   @endforeach
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="status" class="col-sm-2 control-label">Status</label>
-              <div class="col-sm-10">
-                <select class="form-control" name="status">
-                  <option value="0">{{ $setor_status[0] }}</option>
-                  <option value="1">{{ $setor_status[1] }}</option>
                 </select>
               </div>
             </div>

@@ -55,16 +55,16 @@ Mostra Setores
                             <th class="text-center"><i class="glyphicon glyphicon-chevron-right"></i> Ações</th>
                         </thead>
                         <tbody>
-                            @foreach($setores as $setor)
+                            @foreach($entities as $entity)
                                 <tr>
-                                    <td class="col-md-1 text-center">{{ $setor->id }}</td>
-                                    <td class="col-md-6">{{ $setor->nome }}</td>
-                                    <td class="col-md-3">{{ $setor->loja->descricao }}</td>
-                                    <td class="col-md-1 text-center">{{ $setor_status[$setor->status] }}</td>
+                                    <td class="col-md-1 text-center">{{ $entity->id }}</td>
+                                    <td class="col-md-6">{{ $entity->nome }}</td>
+                                    <td class="col-md-3">{{ $entity->loja ? $entity->loja->descricao : '--' }}</td>
+                                    <td class="col-md-1 text-center">{{ $entity_status[$entity->status] }}</td>
                                     <td class="col-md-1 text-center">
-                                        <a href="{{ route('setor_show', $setor->id) }}" title="Mostrar"><span class="glyphicon glyphicon-search"></span></a>
-                                        <a href="{{ route('setor_edit', $setor->id) }}" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a href="{{ route('setor_delete', $setor->id) }}" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
+                                        <a href="{{ route('setor_show', $entity->id) }}" title="Mostrar"><span class="glyphicon glyphicon-search"></span></a>
+                                        <a href="{{ route('setor_edit', $entity->id) }}" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a href="{{ route('setor_delete', $entity->id) }}" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -73,6 +73,14 @@ Mostra Setores
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {!! $entities->render() !!}
+            </div>
+        </div>
+
+    </section>
 
 @stop
 

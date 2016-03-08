@@ -14,55 +14,80 @@ Inserir Marca de Equipamento
 @section('content')
 
 <section class="content-header">
+  <h1>Inserir Marca</h1>
+  <ol class="breadcrumb">
+    <li>
+      <a href="{{ route('dashboard') }}">
+        <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('marca_index') }}">
+        Marcas
+      </a>
+    </li>
+    <li class="active">
+      Novo
+    </li>
+  </ol>
+</section>
 
+<section class="content">
 
-<form class="form-horizontal" action="adiciona">
-<fieldset>
+  <div class="row">
+    <div class="col-md-12">
 
-<legend>Inserir Marca</legend>
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="Nome">Nome</label>  
-  <div class="col-md-5">
-  <input id="Nome" name="Nome" type="text" placeholder="Insira um nome ou descrição" class="form-control input-md" required="">
-    
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <span class="panel-title">Dados da nova Marca</span>
+        </div>
+        <div class="panel-body">
+
+          <form class="form-horizontal" method="POST" action="{{ route('marca_adiciona') }}">
+
+            {{ csrf_field() }}
+
+            <div class="form-group">
+              <label for="descricao" class="col-sm-2 control-label">Descrição</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="descricao" name="descricao">
+              </div>
+
+              <label for="status" class="col-sm-1 control-label">Status</label>
+              <div class="col-sm-2">
+                <select class="form-control" name="status">
+                    @foreach($entity_status as $key => $value)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="observacoes" class="col-sm-2 control-label">Observações</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="observacoes" name="observacoes"></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Salvar
+                </button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="status">Ativa</label>
-  <div class="col-md-5">
-    <select id="status" name="status" class="form-control">
-      <option value="0">Ativa</option>
-      <option value="1">Inativa</option>
-    </select>
-  </div>
-</div>
+</section>
 
-<!-- Textarea -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="observacoes">Observações</label>
-  <div class="col-md-4">                     
-    <textarea class="form-control" id="observacoes" name="observacoes"></textarea>
-  </div>
-</div>
-
-<!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton">Inserir</label>
-  <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Inserir</button>
-  </div>
-</div>
-
-<input type="hidden" name="created_at" value="{{date('Y-m-d')}}"   />
-
-</fieldset>
-</form>
-
-    
-    @stop
+@stop
 
 {{-- page level scripts --}}
 @section('footer_scripts')

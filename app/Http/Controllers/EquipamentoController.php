@@ -2,119 +2,111 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Equipamento;
+use App\User;
+use App\Fornecedor;
+use App\Setor;
+use App\Marca;
 
-class EquipamentoController extends Controller
+use Sentinel;
+use DateTime;
+
+use App\Http\Controllers\MainController;
+
+class EquipamentoController extends MainController
 {
-    
-     public function index()
+    const voltage = [
+        1 => '110v/220v',
+        2 => '220v',
+        3 => '110v',
+    ];
+
+    public function index()
     {
-        $equipamentos = Equipamento::all();
-		return view('admin.equipamento.index')->with('equipamentos', $equipamentos);
-    }
-     
-     public function create()
-    {
-        return view('admin.fornecedor.insere');
+        $filter = '';
+
+        if ( Request::exists('filter') ) {
+            $filter = Request::input('filter');
+        }
+
+        $entities = Equipamento::where('descricao', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->paginate(15);
+
+        return view('admin.equipamento.index', [ 'entities' => $entities, 'filter' => $filter, 'entity_status' => self::entity_status ]);
     }
 
-   public function busca()
-	{   
-		$equip = Request::input('nome');
-		$equipamentos = Fornecedor::where('descricao', 'LIKE', '%'.$equip.'%')->get();
-		if(empty($equipamentos)) {
-			return "Não existe nada parecido com a sua busca";
-		}
-		return view('admin.equipamento.index')->with('equipamentos', $equipamentos);
-		
-	}
-	
-	public function adiciona()
+    public function create() {
+        $users = User::all();
+        $fornecedores = Fornecedor::where('status', '=', 0)->get();
+        $setores = Setor::where('status', '=', 0)->get();
+        $marcas = Marca::where('status', '=', 0)->get();
+
+        return view('admin.equipamento.insere', [
+            'entity_status' => self::entity_status,
+            'users' => $users,
+            'fornecedores' => $fornecedores,
+            'setores' => $setores,
+            'marcas' => $marcas,
+            'voltage' => self::voltage,
+        ]);
+    }
+
+	public function add()
 	{
-		
-		 $nome = Request::input('nome');
-		 $status = Request::input('status');
-		 $observacoes = Request::input('observacoes');
-		 $created_at = Request::input('created_at');
-		 $ddd1 = Request::input('ddd1');
-		 $telefone1 = Request::input('telefone1');
-		 $ddd2 = Request::input('ddd2');
-	     $telefone2 = Request::input('telefone2');
-		 $ddd3 = Request::input('ddd3');
-		 $telefone3 = Request::input('telefone3');
-		 $logradouro = Request::input('logradouro');
-		 $numero = Request::input('numero');
-		 $complemento = Request::input('complemento');
-		 $bairro = Request::input('bairro');
-		 $cidade = Request::input('cidade');
-		 $estado = Request::input('estado');
-		 $cep = Request::input('cep');
-		 $status = Request::input('status');
-		 
-	 		
-		 
-		 DB::insert('insert into fornecedores values (null, ?, ?, ? ,?, ?, 
-		 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, ?)', 
-	    	array($nome, $logradouro, $numero, $complemento, $bairro, $cidade, $estado, $cep,  $observacoes, $ddd1, 
-	    	$telefone1, $ddd2, $telefone2, $ddd3, $telefone3, $created_at, $status));
+        $equipamento = Equipamento::create(Request::all());
+        $current_user = Sentinel::getUser();
 
-		 $fornecedores = Fornecedor::all();
-		 return view('admin.fornecedor.index')->with('fornecedores', $fornecedores);
-		
+        $buy_date = DateTime::createFromFormat('d/m/Y', Request::input('datacompra'));
+
+        $equipamento->datacompra = $buy_date->getTimestamp();
+        $equipamento->idcadastro = $current_user->id;
+        $equipamento->save();
+
+        return redirect()->action('EquipamentoController@index')->with('status', 'Equipamento adiconado com sucesso');
 	}
-	
-	
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        return view('admin.equipamento.mostra', [
+            'entity' => Equipamento::findOrFail($id),
+            'entity_status' => self::entity_status,
+            'voltage' => self::voltage,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $users = User::all();
+        $fornecedores = Fornecedor::where('status', '=', 0)->get();
+        $setores = Setor::where('status', '=', 0)->get();
+        $marcas = Marca::where('status', '=', 0)->get();
+
+        return view('admin.equipamento.edita', [
+            'entity' => Equipamento::findOrFail($id),
+            'entity_status' => self::entity_status,
+            'users' => $users,
+            'fornecedores' => $fornecedores,
+            'setores' => $setores,
+            'marcas' => $marcas,
+            'voltage' => self::voltage,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+        $equipamento = Equipamento::findOrFail(Request::input('id'));
+        $equipamento->fill(Request::all());
+        $equipamento->save();
+
+        return redirect()->action('EquipamentoController@index')->with('status', 'Equipamento atualizado com sucesso');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        Equipamento::findOrFail($id)->delete();
+
+        return redirect()->action('EquipamentoController@index')->with('status', 'Equipamento removido com sucesso');
     }
 }

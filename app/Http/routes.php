@@ -78,30 +78,38 @@ Route::group(array('prefix' => 'admin'), function () {
 	Route::get('setor/deletar/{id}', 'SetorController@delete')->name('setor_delete');
 	// END Routes for Setor
 
-	Route::get('marca/novo', 'MarcaController@create');
+	// Routes for Marca
+	Route::post('marca/adiciona', 'MarcaController@add')->name('marca_adiciona');
+	Route::post('marca/salva', 'MarcaController@update')->name('marca_salva');
 
-	Route::get('marca/adiciona', 'MarcaController@adiciona');
+	Route::get('marca/novo', 'MarcaController@create')->name('marca_new');
+	Route::get('marca/lista', 'MarcaController@index')->name('marca_index');
+	Route::get('marca/mostra/{id}', 'MarcaController@show')->name('marca_show');
+	Route::get('marca/edita/{id}', 'MarcaController@edit')->name('marca_edit');
+	Route::get('marca/deletar/{id}', 'MarcaController@delete')->name('marca_delete');
+	// END Routes for Marca
 
-	Route::get('marca/lista', 'MarcaController@index');
+	// Routes for Fornecedor
+	Route::post('fornecedor/adiciona', 'FornecedorController@add')->name('fornecedor_adiciona');
+	Route::post('fornecedor/salva', 'FornecedorController@update')->name('fornecedor_salva');
 
-	Route::get('marca/buscar', 'MarcaController@busca');
+	Route::get('fornecedor/novo', 'FornecedorController@create')->name('fornecedor_new');
+	Route::get('fornecedor/lista', 'FornecedorController@index')->name('fornecedor_index');
+	Route::get('fornecedor/mostra/{id}', 'FornecedorController@show')->name('fornecedor_show');
+	Route::get('fornecedor/edita/{id}', 'FornecedorController@edit')->name('fornecedor_edit');
+	Route::get('fornecedor/deletar/{id}', 'FornecedorController@delete')->name('fornecedor_delete');
+	// END Routes for Fornecedor
 
-	Route::get('fornecedor/novo', 'FornecedorController@create');
+	// Routes for Equipamentos
+	Route::post('equipamento/adiciona', 'EquipamentoController@add')->name('equipamento_adiciona');
+	Route::post('equipamento/salva', 'EquipamentoController@update')->name('equipamento_salva');
 
-	Route::get('fornecedor/adiciona', 'FornecedorController@adiciona');
-
-	Route::get('fornecedor/lista', 'FornecedorController@index');
-
-	Route::get('fornecedor/buscar', 'FornecedorController@busca');
-
-	Route::get('equipamento/novo', 'FornecedorController@create');
-
-	Route::get('equipamento/adiciona', 'EquipamentoController@adiciona');
-
-	Route::get('equipamento/lista', 'EquipamentoController@index');
-
-	Route::get('equipamento/buscar', 'EquipamentoController@busca');
-
+	Route::get('equipamento/novo', 'EquipamentoController@create')->name('equipamento_new');
+	Route::get('equipamento/lista', 'EquipamentoController@index')->name('equipamento_index');
+	Route::get('equipamento/mostra/{id}', 'EquipamentoController@show')->name('equipamento_show');
+	Route::get('equipamento/edita/{id}', 'EquipamentoController@edit')->name('equipamento_edit');
+	Route::get('equipamento/deletar/{id}', 'EquipamentoController@delete')->name('equipamento_delete');
+	// END Routes for Equipamentos
 
 	Route::get('/', function () {
 		return View::make('admin/index');

@@ -49,21 +49,21 @@ Mostra Loja
 						<thead>
 							<tr>
 								<th class="text-center"><i class="glyphicon glyphicon-chevron-right"></i> Código</th>
-								<th class="hidden-xs"><i class="glyphicon glyphicon-chevron-right"></i> Nome</th>
+								<th class=""><i class="glyphicon glyphicon-chevron-right"></i> Nome</th>
 								<th class="text-center"><i class="glyphicon glyphicon-chevron-right"></i> Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($lojas as $loja)
+							@foreach($entities as $entity)
 								<tr>
-									<td class="col-md-1 text-center">{{ $loja->id }}</td>
-									<td class="col-md-9">{{ $loja->descricao }}</td>
-									<td class="col-md-1 text-center">{{ $loja_status[$loja->status] }}</td>
+									<td class="col-md-1 text-center">{{ $entity->id }}</td>
+									<td class="col-md-9">{{ $entity->descricao }}</td>
+									<td class="col-md-1 text-center">{{ $entity_status[$entity->status] }}</td>
 									<td class="col-md-1 text-center">
-										<a href="{{ route('loja_show', $loja->id) }}" title="Mostrar"><span class="glyphicon glyphicon-search"></span></a>
-										<a href="{{ route('loja_edit', $loja->id) }}" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
-										<a href="{{ route('loja_delete', $loja->id) }}" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
+										<a href="{{ route('loja_show', $entity->id) }}" title="Mostrar"><span class="glyphicon glyphicon-search"></span></a>
+										<a href="{{ route('loja_edit', $entity->id) }}" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
+										<a href="{{ route('loja_delete', $entity->id) }}" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
 									</td>
 								</tr>
 							@endforeach
@@ -72,7 +72,15 @@ Mostra Loja
 				</div>
 			</div>
 		</div>
-</section>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				{!! $entities->render() !!}
+			</div>
+		</div>
+
+	</section>
+
 @stop
 
 {{-- page level scripts --}}

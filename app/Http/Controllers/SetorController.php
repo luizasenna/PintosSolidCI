@@ -12,30 +12,30 @@ use App\Setor;
 use App\Loja;
 use Illuminate\Support\Facades\DB;
 
-class SetorController extends Controller
-{
-    const setor_status = [
-        0 => 'Ativo',
-        1 => 'Inativo'
-    ];
+use App\Http\Controllers\MainController;
 
+class SetorController extends MainController
+{
     public function index()
     {
-        $filter = "";
+        $filter = Request::exists('filter') ? Request::input('filter') : '';
 
-        if ( Request::exists('filter') ) {
-            $filter = Request::input('filter');
-        }
+        $entities = Setor::where('nome', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->paginate(15);
 
-        $setores = Setor::where('nome', 'LIKE', '%'.$filter.'%')->where('status', '=', 0)->get();
-
-		return view('admin.setor.index', ['setores' => $setores, 'filter' => $filter, 'setor_status' => self::setor_status]);
+		return view('admin.setor.index', [
+            'entities' => $entities,
+            'filter' => $filter,
+            'entity_status' => self::entity_status
+        ]);
     }
 
     public function create()
     {
         $lojas = Loja::all();
-        return view('admin.setor.insere', ['lojas' => $lojas, 'setor_status' => self::setor_status]);
+        return view('admin.setor.insere', [
+            'lojas' => $lojas,
+            'entity_status' => self::entity_status
+        ]);
     }
 
     public function add()
@@ -47,12 +47,20 @@ class SetorController extends Controller
 
     public function show($id)
     {
-        return view('admin.setor.mostra', ['setor' => Setor::findOrFail($id), 'setor_status' => self::setor_status]);
+        return view('admin.setor.mostra', [
+            'entity' => Setor::findOrFail($id),
+            'entity_status' => self::entity_status
+        ]);
     }
 
     public function edit($id)
     {
-        return view('admin.setor.edita', ['setor' => Setor::findOrFail($id), 'setor_status' => self::setor_status]);
+        $lojas = Loja::all();
+        return view('admin.setor.edita', [
+            'entity' => Setor::findOrFail($id),
+            'lojas' => $lojas,
+            'entity_status' => self::entity_status
+        ]);
     }
 
     public function update()

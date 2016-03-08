@@ -55,10 +55,10 @@ return array(
 
                 'mysql' => array(
                         'driver'    => 'mysql',
-                        'host'      => 'pintos.com.br',
-                        'database'  => 'site_solidci',
-                        'username'  => 'site_solidci',
-                        'password'  => 'm00n123',
+                        'host'      => 'localhost',
+                        'database'  => 'rckjanwntc',
+                        'username'  => 'rckjanwntc',
+                        'password'  => '8ptvAczSpE',
                         'charset'   => 'utf8',
                         'collation' => 'utf8_unicode_ci',
                         'prefix'    => '',

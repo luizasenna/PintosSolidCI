@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Inserir Fornecedor
+Editar Fornecedor
 @parent
 @stop
 
@@ -14,23 +14,23 @@ Inserir Fornecedor
 @section('content')
 
 <section class="content-header">
-	<h1>Inserir Fornecedor</h1>
-	<ol class="breadcrumb">
-		<li>
-			<a href="{{ route('dashboard') }}">
-				<i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-				Dashboard
-			</a>
-		</li>
-		<li>
-			<a href="{{ route('fornecedor_index') }}">
-				Fornecedores
-			</a>
-		</li>
-		<li class="active">
-			Novo
-		</li>
-	</ol>
+    <h1>Editar Fornecedor</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ route('dashboard') }}">
+                <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('fornecedor_index') }}">
+                Fornecedores
+            </a>
+        </li>
+        <li class="active">
+            Fornecedor {{ $entity->id }}
+        </li>
+    </ol>
 </section>
 
 <section class="content">
@@ -44,20 +44,22 @@ Inserir Fornecedor
                 </div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" method="POST" action="{{ route('fornecedor_adiciona') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('fornecedor_salva') }}">
 
                         {{ csrf_field() }}
+
+                        <input type="hidden" name="id" value="{{ $entity->id }}">
 
                         <div class="form-group">
                             <label for="nome" class="col-sm-2 control-label">Nome</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="nome">
+                                <input type="text" class="form-control" name="nome" value="{{ $entity->nome }}">
                             </div>
                             <label for="status" class="col-sm-1 control-label">Status</label>
                             <div class="col-sm-2">
                                 <select class="form-control" name="status">
                                     @foreach($entity_status as $key => $value)
-                                        <option value="{{ $key }}">{{ $value }}</option>
+                                        <option value="{{ $key }}" {{ $entity->status == $key ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -66,47 +68,47 @@ Inserir Fornecedor
                         <div class="form-group">
                           <label for="observacoes" class="col-sm-2 control-label">Observações</label>
                           <div class="col-sm-10">
-                            <textarea class="form-control" rows="3" id="observacoes" name="observacoes"></textarea>
+                            <textarea class="form-control" rows="3" id="observacoes" name="observacoes">{{ $entity->observacoes }}</textarea>
                           </div>
                         </div>
 
                         <div class="form-group">
                             <label for="logradouro" class="col-sm-2 control-label">Logradouro</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="logradouro">
+                                <input type="text" class="form-control" name="logradouro" value="{{ $entity->logradouro }}">
                             </div>
                             <label for="numero" class="col-sm-1 control-label">Número</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="numero">
+                                <input type="text" class="form-control" name="numero" value="{{ $entity->numero }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="complemento" class="col-sm-2 control-label">Complemento</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="complemento">
+                                <input type="text" class="form-control" name="complemento" value="{{ $entity->complemento }}">
                             </div>
 
                             <label for="bairro" class="col-sm-1 control-label">Bairro</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="bairro">
+                                <input type="text" class="form-control" name="bairro" value="{{ $entity->bairro }}">
                             </div>
                             <label for="cep" class="col-sm-1 control-label">CEP</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="cep">
+                                <input type="text" class="form-control" name="cep" value="{{ $entity->cep }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="cidade" class="col-sm-2 control-label">Cidade</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="cidade">
+                                <input type="text" class="form-control" name="cidade" value="{{ $entity->cidade }}">
                             </div>
                             <label for="estado" class="col-sm-1 control-label">Estado</label>
                             <div class="col-sm-2">
                                 <select class="form-control" name="estado">
                                     @foreach($fornecedor_estados as $estado)
-                                        <option value="{{ $estado }}">{{ $estado }}</option>
+                                        <option value="{{ $estado }}" {{ $entity->estado == $estado ? 'selected' : '' }}>{{ $estado }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -115,28 +117,28 @@ Inserir Fornecedor
                         <div class="form-group">
                             <label for="ddd1" class="col-sm-2 control-label">Telefone 1</label>
                             <div class="col-sm-1">
-                                <input type="text" class="form-control" name="ddd1" placeholder="ddd">
+                                <input type="text" class="form-control" name="ddd1" placeholder="ddd" value="{{ $entity->ddd1 }}">
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="telefone1" placeholder="telefone">
+                                <input type="text" class="form-control" name="telefone1" placeholder="telefone" value="{{ $entity->telefone1 }}">
                             </div>
 
                             <label for="ddd2" class="col-sm-2 control-label">Telefone 2</label>
                             <div class="col-sm-1">
-                                <input type="text" class="form-control" name="ddd2" placeholder="ddd">
+                                <input type="text" class="form-control" name="ddd2" placeholder="ddd" value="{{ $entity->ddd2 }}">
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="telefone2" placeholder="telefone">
+                                <input type="text" class="form-control" name="telefone2" placeholder="telefone" value="{{ $entity->telefone2 }}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="ddd3" class="col-sm-2 control-label">Telefone 1</label>
                             <div class="col-sm-1">
-                                <input type="text" class="form-control" name="ddd3" placeholder="ddd">
+                                <input type="text" class="form-control" name="ddd3" placeholder="ddd" value="{{ $entity->ddd3 }}">
                             </div>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" name="telefone3" placeholder="telefone">
+                                <input type="text" class="form-control" name="telefone3" placeholder="telefone" value="{{ $entity->telefone3 }}">
                             </div>
                         </div>
 
@@ -156,7 +158,7 @@ Inserir Fornecedor
 
 </section>
 
-@stop
+    @stop
 
 {{-- page level scripts --}}
 @section('footer_scripts')

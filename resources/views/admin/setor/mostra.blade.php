@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Mostra Loja
+Mostra Setor
 @parent
 @stop
 
@@ -14,7 +14,7 @@ Mostra Loja
 @section('content')
 
 <section class="content-header">
-    <h1>Mostra Loja</h1>
+    <h1>Mostra Setor</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('dashboard') }}">
@@ -23,25 +23,35 @@ Mostra Loja
             </a>
         </li>
         <li>
-            <a href="{{ route('loja_index') }}">
-                Lojas
+            <a href="{{ route('setor_index') }}">
+                Setores
             </a>
         </li>
         <li class="active">
-            Loja {{ $entity->id }}
+            Setor {{ $entity->id }}
         </li>
     </ol>
 </section>
 
 <section class="content">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="panel-title">Código</span>
                 </div>
                 <div class="panel-body">
                     {{ $entity->id }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Nome</span>
+                </div>
+                <div class="panel-body">
+                    {{ $entity->nome }}
                 </div>
             </div>
         </div>
@@ -60,10 +70,10 @@ Mostra Loja
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="panel-title">Descrição</span>
+                    <span class="panel-title">Loja</span>
                 </div>
                 <div class="panel-body">
-                    {{ $entity->descricao }}
+                    {{ $entity->loja->descricao }}
                 </div>
             </div>
         </div>

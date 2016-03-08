@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Inserir Equipamento
+Editar Equipamento
 @parent
 @stop
 
@@ -17,7 +17,7 @@ Inserir Equipamento
 @section('content')
 
 <section class="content-header">
-	<h1>Inserir Equipamento</h1>
+	<h1>Editar Equipamento</h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="{{ route('dashboard') }}">
@@ -31,7 +31,7 @@ Inserir Equipamento
 			</a>
 		</li>
 		<li class="active">
-			Novo
+			Editar
 		</li>
 	</ol>
 </section>
@@ -43,25 +43,27 @@ Inserir Equipamento
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<span class="panel-title">Dados novo Equipamento</span>
+					<span class="panel-title">Dados do Equipamento</span>
 				</div>
 				<div class="panel-body">
 
-					<form class="form-horizontal" method="POST" action="{{ route('equipamento_adiciona') }}">
+					<form class="form-horizontal" method="POST" action="{{ route('equipamento_salva') }}">
 
 						{{ csrf_field() }}
+
+						<input type="hidden" name="id" value="{{ $entity->id }}">
 
 						<div class="form-group">
 							<label for="descricao" class="col-sm-2 control-label">Descrição</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" id="descricao" name="descricao">
+								<input type="text" class="form-control" id="descricao" name="descricao" value="{{ $entity->descricao }}">
 							</div>
 
 							<label for="description" class="col-sm-1 control-label">Status</label>
 							<div class="col-sm-2">
 								<select class="form-control" name="status">
 									@foreach($entity_status as $key => $state)
-										<option value="{{ $key }}">{{ $state }}</option>
+										<option value="{{ $key }}" {{ $entity->status == $key ? 'selected' : '' }}>{{ $state }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -70,11 +72,11 @@ Inserir Equipamento
 						<div class="form-group">
 							<label for="datacompra" class="col-sm-2 control-label">Data da Compra</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="datacompra" name="datacompra" readonly>
+								<input type="text" class="form-control" id="datacompra" name="datacompra" readonly value="{{ date('d/m/Y', strtotime($entity->datacompra)) }}">
 							</div>
 							<label for="chaveserial" class="col-sm-1 control-label">Chave/Serial</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" id="chaveserial" name="chaveserial">
+								<input type="text" class="form-control" id="chaveserial" name="chaveserial" value="{{ $entity->chaveserial }}">
 							</div>
 						</div>
 
@@ -83,19 +85,19 @@ Inserir Equipamento
 							<div class="col-sm-2">
 								<select class="form-control" name="voltagem">
 									@foreach($voltage as $key => $volts)
-										<option value="{{ $key }}">{{ $volts }}</option>
+										<option value="{{ $key }}" {{ $entity->voltagem == $key ? 'selected' : '' }}>{{ $volts }}</option>
 									@endforeach
 								</select>
 							</div>
 							<label for="modelo" class="col-sm-1 control-label">Modelo</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="modelo" name="modelo">
+								<input type="text" class="form-control" id="modelo" name="modelo" value="{{ $entity->modelo }}">
 							</div>
 							<label for="valorcompra" class="col-sm-1 control-label">Valor</label>
 							<div class="col-sm-2">
 								<div class="input-group">
 									<div class="input-group-addon">R$</div>
-									<input type="number" step="0.01" class="form-control" id="valorcompra" name="valorcompra">
+									<input type="number" step="0.01" class="form-control" id="valorcompra" name="valorcompra" value="{{ $entity->valorcompra }}">
 								</div>
 							</div>
 						</div>
@@ -103,28 +105,28 @@ Inserir Equipamento
 						<div class="form-group">
 							<label for="codigobarras" class="col-sm-2 control-label">Código de Barras</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="codigobarras" name="codigobarras">
+								<input type="text" class="form-control" id="codigobarras" name="codigobarras" value="{{ $entity->codigobarras }}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="nota" class="col-sm-2 control-label">Nota</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="nota" name="nota">
+								<input type="text" class="form-control" id="nota" name="nota" value="{{ $entity->nota }}">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="observacoes" class="col-sm-2 control-label">Observações</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" rows="3" id="observacoes" name="observacoes"></textarea>
+								<textarea class="form-control" rows="3" id="observacoes" name="observacoes">{{ $entity->observacoes }}</textarea>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="caracteristicas" class="col-sm-2 control-label">Características</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" rows="3" id="caracteristicas" name="caracteristicas"></textarea>
+								<textarea class="form-control" rows="3" id="caracteristicas" name="caracteristicas">{{ $entity->caracteristicas }}</textarea>
 							</div>
 						</div>
 
@@ -133,7 +135,11 @@ Inserir Equipamento
 							<div class="col-sm-2">
 								<select class="form-control" name="idfornecedor">
 									@foreach($fornecedores as $fornecedor)
-										<option value="{{ $fornecedor->id }}">{{ $fornecedor->nome }}</option>
+										<option value="{{ $fornecedor->id }}"
+											@if($entity->fornecedor)
+												{{ $entity->fornecedor == $fornecedor ? 'selected' : '' }}
+											@endif
+										>{{ $fornecedor->nome }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -141,7 +147,11 @@ Inserir Equipamento
 							<div class="col-sm-3">
 								<select class="form-control" name="idsetor">
 									@foreach($setores as $setor)
-										<option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+										<option value="{{ $setor->id }}"
+											@if($entity->setor)
+												{{ $entity->setor == $setor ? 'selected' : '' }}
+											@endif
+										>{{ $setor->nome }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -149,7 +159,11 @@ Inserir Equipamento
 							<div class="col-sm-3">
 								<select class="form-control" name="idmarca">
 									@foreach($marcas as $marca)
-										<option value="{{ $marca->id }}">{{ $marca->descricao }}</option>
+										<option value="{{ $marca->id }}"
+											@if($entity->marca)
+												{{ $entity->marca == $marca ? 'selected' : '' }}
+											@endif
+										>{{ $marca->descricao }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -160,24 +174,40 @@ Inserir Equipamento
 							<div class="col-sm-2">
 								<select class="form-control" name="idorcador">
 									@foreach($users as $user)
-										<option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+										<option value="{{ $user->id }}"
+											@if($entity->orcador)
+												{{ $entity->orcador == $user ? 'selected' : '' }}
+											@endif
+										>{{ $user->first_name }} {{ $user->last_name }}</option>
 									@endforeach
 								</select>
 							</div>
 							<label for="idaprovador" class="col-sm-1 control-label">Aprovador</label>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<select class="form-control" name="idaprovador">
 									@foreach($users as $user)
-										<option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+										<option value="{{ $user->id }}"
+											@if($entity->aprovador)
+												{{ $entity->aprovador == $user ? 'selected' : '' }}
+											@endif
+										>{{ $user->first_name }} {{ $user->last_name }}</option>
 									@endforeach
 								</select>
+							</div>
+							<label class="col-sm-1 control-label">Cadastro</label>
+							<div class="col-sm-3">
+								@if($entity->cadastro)
+									<input type="text" class="form-control" id="nota" name="nota" value="{{ $entity->cadastro->first_name }} {{ $entity->cadastro->last_name }}" disabled>
+								@else
+									<input type="text" class="form-control" id="nota" name="nota" value="Usuário de cadastro não encontrado" disabled>
+								@endif
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="usuariolocal" class="col-sm-2 control-label">Usuário Local</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="usuariolocal" name="usuariolocal">
+								<input type="text" class="form-control" id="usuariolocal" name="usuariolocal" value="{{ $entity->usuariolocal }}">
 							</div>
 						</div>
 
