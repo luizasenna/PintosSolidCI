@@ -1,0 +1,91 @@
+
+
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Mostra Loja
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php /* Page content */ ?>
+<?php $__env->startSection('content'); ?>
+
+	<section class="content-header">
+		<h1>Mostra Loja</h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="<?php echo e(route('dashboard')); ?>">
+					<i class="livicon" data-name="home" data-size="14" data-color="#000"></i> Dashboard
+				</a>
+			</li>
+			<li class="active">Lojas</li>
+		</ol>
+	</section>
+
+	<section class="content">
+		<div class="row">
+			<div class="col-md-4">
+				<form id="filter_form" class="form-inline" action="<?php echo e(route('loja_index')); ?>" method="GET">
+					<div id="filter_input" class="form-group">
+						<input type="search" class="form-control" placeholder="Inisira um nome e tecle enter" name="filter" value="<?php echo e($filter); ?>">
+					</div>
+					<div id="filter_button" class="form-group">
+						<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-8">
+				<a href="<?php echo e(route('loja_new')); ?>" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-plus"></span> Inserir</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-scrollable table-responsive" style="margin-top:20px;">
+					<table class="table table-striped table-bordered table-advance table-hover">
+						<thead>
+							<tr>
+								<th class="text-center"><i class="glyphicon glyphicon-chevron-right"></i> Código</th>
+								<th class=""><i class="glyphicon glyphicon-chevron-right"></i> Nome</th>
+								<th class="text-center"><i class="glyphicon glyphicon-chevron-right"></i> Status</th>
+								<th class="text-center">Ações</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($entities as $entity): ?>
+								<tr>
+									<td class="col-md-1 text-center"><?php echo e($entity->id); ?></td>
+									<td class="col-md-9"><?php echo e($entity->descricao); ?></td>
+									<td class="col-md-1 text-center"><?php echo e($entity_status[$entity->status]); ?></td>
+									<td class="col-md-1 text-center">
+										<a href="<?php echo e(route('loja_show', $entity->id)); ?>" title="Mostrar"><span class="glyphicon glyphicon-search"></span></a>
+										<a href="<?php echo e(route('loja_edit', $entity->id)); ?>" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
+										<a href="<?php echo e(route('loja_delete', $entity->id)); ?>" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<?php echo $entities->render(); ?>
+
+			</div>
+		</div>
+
+	</section>
+
+<?php $__env->stopSection(); ?>
+
+<?php /* page level scripts */ ?>
+<?php $__env->startSection('footer_scripts'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

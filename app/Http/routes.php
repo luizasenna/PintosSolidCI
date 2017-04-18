@@ -67,6 +67,7 @@ Route::group(array('prefix' => 'admin'), function () {
 	Route::get('loja/deletar/{id}', 'LojaController@delete')->name('loja_delete');
 	// END Routes for Loja
 
+
 	// Routes for Setor
 	Route::post('setor/adiciona', 'SetorController@add')->name('setor_adiciona');
 	Route::post('setor/salva', 'SetorController@update')->name('setor_salva');
@@ -110,6 +111,29 @@ Route::group(array('prefix' => 'admin'), function () {
 	Route::get('equipamento/edita/{id}', 'EquipamentoController@edit')->name('equipamento_edit');
 	Route::get('equipamento/deletar/{id}', 'EquipamentoController@delete')->name('equipamento_delete');
 	// END Routes for Equipamentos
+
+	// Routes for Loja
+	Route::post('grupo/adiciona', 'GrupoController@add')->name('grupo_adiciona');
+	Route::post('grupo/salva', 'GrupoController@update')->name('grupo_salva');
+
+	Route::get('grupo/novo', 'GrupoController@create')->name('grupo_new');;
+	Route::get('grupo/lista', 'GrupoController@index')->name('grupo_index');
+	Route::get('grupo/mostra/{id}', 'GrupoController@show')->name('grupo_show');
+	Route::get('grupo/edita/{id}', 'GrupoController@edit')->name('grupo_edit');
+	Route::get('grupo/deletar/{id}', 'GrupoController@delete')->name('grupo_delete');
+	// END Routes for Loja
+
+	//Routes pra Relatorio
+
+
+	Route::get('relatorio/equipamento/index', 'RelatorioController@equipamentoIndex');
+	Route::get('relatorio/equipamento/lista', 'RelatorioController@equipamentoLista')->name('relatorio_lista');
+
+
+
+	// Routes for HistoricoEquipamentos
+	Route::post('historicoequipamento/adiciona', 'HistoricoEquipamentoController@add')->name('historico_equipamento_adiciona');
+	// END Routes for HistoricoEquipamentos
 
 	Route::get('/', function () {
 		return View::make('admin/index');

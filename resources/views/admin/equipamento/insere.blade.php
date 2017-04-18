@@ -54,9 +54,9 @@ Inserir Equipamento
 						<div class="form-group">
 							<label for="descricao" class="col-sm-2 control-label">Descrição</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control" id="descricao" name="descricao">
+								<input type="text" class="form-control" id="descricao" name="descricao" required="yes">
 							</div>
-
+							
 							<label for="description" class="col-sm-1 control-label">Status</label>
 							<div class="col-sm-2">
 								<select class="form-control" name="status">
@@ -70,10 +70,14 @@ Inserir Equipamento
 						<div class="form-group">
 							<label for="datacompra" class="col-sm-2 control-label">Data da Compra</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="datacompra" name="datacompra" readonly>
+								<input type="text" class="form-control" id="datacompra" name="datacompra" required="yes">
+							</div>
+							<label for="modelo" class="col-sm-1 control-label">Modelo</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="modelo" name="modelo">
 							</div>
 							<label for="chaveserial" class="col-sm-1 control-label">Chave/Serial</label>
-							<div class="col-sm-7">
+							<div class="col-sm-3">
 								<input type="text" class="form-control" id="chaveserial" name="chaveserial">
 							</div>
 						</div>
@@ -87,12 +91,16 @@ Inserir Equipamento
 									@endforeach
 								</select>
 							</div>
-							<label for="modelo" class="col-sm-1 control-label">Modelo</label>
-							<div class="col-sm-4">
-								<input type="text" class="form-control" id="modelo" name="modelo">
+							<label for="idmarca" class="col-sm-1 control-label">Marca</label>
+							<div class="col-sm-3">
+								<select class="form-control" name="idmarca">
+									@foreach($marcas as $marca)
+										<option value="{{ $marca->id }}">{{ $marca->descricao }}</option>
+									@endforeach
+								</select>
 							</div>
 							<label for="valorcompra" class="col-sm-1 control-label">Valor</label>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<div class="input-group">
 									<div class="input-group-addon">R$</div>
 									<input type="number" step="0.01" class="form-control" id="valorcompra" name="valorcompra">
@@ -102,15 +110,36 @@ Inserir Equipamento
 
 						<div class="form-group">
 							<label for="codigobarras" class="col-sm-2 control-label">Código de Barras</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 								<input type="text" class="form-control" id="codigobarras" name="codigobarras">
+							</div>
+							<label for="nota" class="col-sm-2 control-label">Nota Fiscal</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="nota" name="nota">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="nota" class="col-sm-2 control-label">Nota</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="nota" name="nota">
+							<label for="nota" class="col-sm-2 control-label">Categoria</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="idcategoria">
+									
+									@foreach($categorias as $c)
+										<option 
+										value="{{ $c->id }}">{{ $c->nome }}</option>
+										</option>
+									@endforeach
+								</select>
+							</div>
+							<label for="nota" class="col-sm-1 control-label">Grupo</label>
+							<div class="col-sm-5">
+								<select class="form-control" name="idgrupo">
+									@foreach($grupos as $g)
+										<option 
+										value="{{ $g->id }}">{{ $g->nome }}</option>
+										</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 
@@ -137,6 +166,14 @@ Inserir Equipamento
 									@endforeach
 								</select>
 							</div>
+							<label for="idloja" class="col-sm-1 control-label">Filial</label>
+							<div class="col-sm-3">
+								<select class="form-control" name="idloja" required="yes">
+									@foreach($lojas as $l)
+										<option value="{{ $l->id }}">{{ $l->descricao }}</option>
+									@endforeach
+								</select>
+							</div>
 							<label for="idsetor" class="col-sm-1 control-label">Setor</label>
 							<div class="col-sm-3">
 								<select class="form-control" name="idsetor">
@@ -145,20 +182,19 @@ Inserir Equipamento
 									@endforeach
 								</select>
 							</div>
-							<label for="idmarca" class="col-sm-1 control-label">Marca</label>
-							<div class="col-sm-3">
-								<select class="form-control" name="idmarca">
-									@foreach($marcas as $marca)
-										<option value="{{ $marca->id }}">{{ $marca->descricao }}</option>
-									@endforeach
-								</select>
-							</div>
+							
 						</div>
 
 						<div class="form-group">
+							<label for="idorcador" class="col-sm-2 control-label">Garantia</label>
+							<div class="col-sm-3">
+								<!--<input type="date" class="form-control" id="garantia" name="garantia" format="dd/MM/yyyy">-->
+								<input type="text" class="form-control" id="garantia" name="garantia" required="yes">
+							</div>
 							<label for="idorcador" class="col-sm-2 control-label">Orçador</label>
 							<div class="col-sm-2">
 								<select class="form-control" name="idorcador">
+									<option value="">Nenhum</option>
 									@foreach($users as $user)
 										<option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
 									@endforeach
@@ -167,6 +203,7 @@ Inserir Equipamento
 							<label for="idaprovador" class="col-sm-1 control-label">Aprovador</label>
 							<div class="col-sm-2">
 								<select class="form-control" name="idaprovador">
+									<option value="">Nenhum</option>
 									@foreach($users as $user)
 										<option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
 									@endforeach
@@ -175,9 +212,9 @@ Inserir Equipamento
 						</div>
 
 						<div class="form-group">
-							<label for="usuariolocal" class="col-sm-2 control-label">Usuário Local</label>
+							<label for="situacao" class="col-sm-2 control-label">Situação</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="usuariolocal" name="usuariolocal">
+								<input type="text" class="form-control" id="situacao" name="situacao">
 							</div>
 						</div>
 
@@ -208,6 +245,14 @@ Inserir Equipamento
 <script type="text/javascript">
 
 	$('#datacompra').datepicker({
+		autoclose: true,
+		format: 'dd/mm/yyyy',
+		language: 'pt-BR',
+		todayBtn: 'linked',
+		todayHighlight: true,
+	});
+
+	$('#garantia').datepicker({
 		autoclose: true,
 		format: 'dd/mm/yyyy',
 		language: 'pt-BR',

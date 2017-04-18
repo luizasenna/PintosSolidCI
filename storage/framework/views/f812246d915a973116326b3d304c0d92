@@ -1,0 +1,387 @@
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Mostra Equipamento
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php /* Page content */ ?>
+<?php $__env->startSection('content'); ?>
+
+<section class="content-header">
+    <h1>Detalhes do Equipamento <?php echo e($entity->descricao); ?> </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="<?php echo e(route('dashboard')); ?>">
+                <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="<?php echo e(route('equipamento_index')); ?>">
+                Equipamentos
+            </a>
+        </li>
+        <li class="active">
+            Equipamento <?php echo e($entity->id); ?> 
+        </li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title"><span class="glyphicon glyphicon-bookmark"></span>
+                    Detalhes</span>
+                    <a class="btn btn-warning pull-right btn-sm" style="margin-bottom: 5px;" href="/admin/equipamento/edita/<?php echo e($entity->id); ?>" role="button"> <span class="glyphicon glyphicon-edit"></span> Editar este equipamento</a>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-8">
+                        <table class="table table-stripped">
+                             <tr>
+                                <th>Descricao</th> <td> <?php echo e($entity->descricao); ?> </td>
+                            </tr>
+                            <tr>
+                                <th>Código Solid</th> <td><?php echo e($entity->id); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Localização Atual</th>
+                                <td> <?php if($entity->setor): ?>
+                                    <?php echo e($entity->setor->nome); ?>
+
+                                <?php else: ?>
+                                    Setor não encontrado
+                                <?php endif; ?></td>
+                            </tr>
+                            <tr>
+                            <th>Código de Barras</th>                         
+                            <td><?php if($entity->codigobarras): ?><?php echo e($entity->codigobarras); ?><?php endif; ?></td>
+                            </tr>
+                            
+                    </table>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well">
+                            <span class="text-right pull-right">
+                                Status:<?php echo e($entity_status[$entity->status]); ?>
+
+                            </span>
+                            <hr/>
+                            <h5  class="pull-center text-center">Número de Série / Chave Serial</h5> 
+                            <h3 class="text-primary pull-center text-center"><?php echo e($entity->chaveserial); ?></h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    <h4><span class="glyphicon glyphicon-tag"></span> Características</h4>
+                    <table class="table table-stripped">
+                         <tr>
+                            <th>Marca</th>
+                            <td>
+                                  <?php if($entity->marca): ?>
+                                    <?php echo e($entity->marca->descricao); ?>
+
+                                <?php else: ?>
+                                    Marca não encontrada
+                                <?php endif; ?>
+                            </td>
+                            <th>Modelo</th>
+                            <td> <?php if($entity->modelo): ?><?php echo e($entity->modelo); ?><?php endif; ?></td>
+                        </tr>
+                         <tr>
+                            <th>Categoria</th>
+                            <td>
+                                <?php if($entity->categoria): ?>
+                                    <?php echo e($entity->categoria->nome); ?>
+
+                                <?php else: ?>
+                                    Categoria não encontrada
+                                <?php endif; ?>
+                            </td>
+                            <th>Grupo</th>
+                            <td>
+                                <?php if($entity->grupo): ?>
+                                    <?php echo e($entity->grupo->nome); ?>
+
+                                <?php else: ?>
+                                    Grupo não encontrado
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                         <tr>
+                            <th>Voltagem</th>
+                            <td>
+                                <?php if($entity->voltagem): ?> <?php echo e(array_get($voltage, $entity->voltagem, '--')); ?> <?php endif; ?>
+                            </td>
+                            <th>Garantia</th>
+                            <td>
+                                 <?php if($entity->garantia): ?> <?php echo e(date('d/m/Y', strtotime($entity->garantia))); ?>
+
+                                 <?php else: ?> ---
+                                 <?php endif; ?>
+                            </td>
+                            
+                        </tr>
+                        
+
+                    </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><span class="glyphicon glyphicon-usd"></span> Nota Fiscal</h4>
+                    <table class="table table-stripped">
+                         <tr>
+                            <th>Nr Nota</th>
+                            <td>
+                                 <?php if($entity->nota): ?><?php echo e($entity->nota); ?><?php endif; ?>
+                            </td>
+                            <th>Data da compra</th>
+                            <td><?php if($entity->datacompra): ?><?php echo e(date('d/m/Y', strtotime($entity->datacompra))); ?><?php endif; ?></td>
+                        </tr>
+                         <tr>
+                            <th>Fornecedor</th>
+                            <td>
+                                 <?php if($entity->fornecedor): ?>
+                                    <?php echo e($entity->fornecedor->nome); ?>
+
+                                <?php else: ?>
+                                    Fornecedor não encontrado
+                                <?php endif; ?>
+                            </td>
+                           <th>Valor de compra</th>
+                            <td>R$ <?php if($entity->valorcompra): ?><?php echo e($entity->valorcompra); ?><?php endif; ?></td>
+                        </tr>
+                       
+                        </table>
+                       
+                       
+                    </div>
+                    <div class="col-sm-12">
+                         <table class="table table-stripped">
+                             <tr>
+                             <th>Cadastro</th>
+                            <td> <?php if($entity->cadastro): ?>
+                                    <?php echo e($entity->cadastro->first_name); ?> <?php echo e($entity->cadastro->last_name); ?>
+
+                                <?php else: ?>
+                                    Usuário não encontrado
+                                <?php endif; ?>
+                            </td>
+                            <th>Orçamento</th>
+                            <td> <?php if($entity->orcador): ?>
+                                    <?php echo e($entity->orcador->first_name); ?> <?php echo e($entity->orcador->last_name); ?>
+
+                                <?php else: ?>
+                                    Usuário orçador não encontrado
+                                <?php endif; ?>
+                            </td>
+                           <th>Aprovação</th>
+                            <td>
+                                  <?php if($entity->aprovador): ?>
+                                    <?php echo e($entity->aprovador->first_name); ?> <?php echo e($entity->aprovador->last_name); ?>
+
+                                <?php else: ?>
+                                    Usuário aprovador não encontrado
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">Observações</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->observacoes); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">Características</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->caracteristicas); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+            <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="panel-title">Situacao</span>
+                </div>
+                <div class="panel-body">
+                        <?php echo e($entity->situacao); ?>
+
+               </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="history_panel" class="panel panel-primary">
+                <div class="panel-heading">
+                    <label>Histórico do Equipamento</label><button class="btn btn-warning pull-right" type="button" data-toggle="modal" data-target="#create_history">Adicionar</button>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Setor</th>
+                            <th>Tipo</th>
+                            <th>Observação</th>
+                            <th>Usuário</th>
+                            <th>Status</th>
+                            <th>Data de Criação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $__empty_1 = true; foreach($entity->historico as $entry): $__empty_1 = false; ?>
+                            <tr class="<?php if($entry->status==0): ?> text-primary <?php endif; ?>">
+                                <td>
+                                    <?php echo e($entry->setor ? $entry->setor->nome : '--'); ?>
+
+                                </td>
+                                <td><?php echo e($entry->tipo ? $entry->tipo->descricao : '--'); ?>
+
+                                <td><?php echo e($entry->observacao); ?></td>
+                                <td><?php echo e($entry->usuario ? $entry->usuario->first_name : '--'); ?></td>
+                                <td><?php if($entry->status): ?><?php echo e(array_get($hist, $entry->status, '--')); ?><?php endif; ?> </td>
+                                <td><?php echo e(date("d/m/Y", strtotime($entry->created_at))); ?></td>
+                            </tr>
+                        <?php endforeach; if ($__empty_1): ?>
+                            <tr>
+                                <td class="col-md-1 text-center" colspan="6">
+                                    <label>Nenhum registro de histórico encontrado para este equipamento</label>
+                                </td>
+                            </td>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="create_history" tabindex="-1" role="dialog" aria-labelledby="create_history_label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="create_history_label">Adicionar Histórico ao Equipamento <?php echo e($entity->descricao); ?></h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="form-horizontal" method="POST" action="<?php echo e(route('historico_equipamento_adiciona')); ?>">
+                        <?php echo e(csrf_field()); ?>
+
+                        <input type="hidden" name="idequipamento" value="<?php echo e($entity->id); ?>">
+
+                        <div class="form-group">
+                            <label for="observacao" class="col-sm-2 control-label">Observação</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" id="observacao" name="observacao"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Setor</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="idsetor">
+                                    <?php foreach($setores as $setor): ?>
+                                        <option value="<?php echo e($setor->id); ?>"><?php echo e($setor->nome); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <label for="description" class="col-sm-3  control-label">Tipo Histórico</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="idtipohistorico">
+                                    <?php foreach($tipo_historico as $tipo): ?>
+                                        <option value="<?php echo e($tipo->id); ?>"><?php echo e($tipo->descricao); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                         </div>
+                         <div class="form-group">    
+                            <label for="garantia" class="col-sm-3 control-label">Nova Garantia</label>
+                           
+                           
+
+                            <div class="col-sm-9">
+                               <input type="text" class="form-control" id="garantianova" name="mudagarantia" value="<?php echo e(date('d/m/Y', strtotime($entity->garantia))); ?>">
+                         
+
+
+                            </div>
+                             <div class=" form-group" >
+                             <div class="col-sm-5 col-sm-push-4" style="margin-top:20px;">
+                                <input class="form-control btn btn-primary" type="submit" name="Salvar" value="Salvar">
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group"> -->
+
+                        <!-- </div> -->
+
+<!-- 'observacao', 'idequipamento', 'idsetor', 'idusuario', 'idtipohistorico' -->
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<?php $__env->stopSection(); ?>
+
+<?php /* page level scripts */ ?>
+<?php $__env->startSection('footer_scripts'); ?>
+
+<script type="text/javascript">
+
+   
+    $('#garantianova').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy',
+        language: 'pt-BR',
+        todayBtn: 'linked',
+        todayHighlight: true,
+    });
+
+</script>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('admin/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

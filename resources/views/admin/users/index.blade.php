@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Users List
+Lista de Usuários
 @parent
 @stop
 
@@ -21,11 +21,11 @@ Users List
         <li>
             <a href="{{ route('dashboard') }}">
                 <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                Dashboard
+                Painel
             </a>
         </li>
-        <li>Users</li>
-        <li class="active">Users</li>
+        <li>Usuários</li>
+        <li class="active">Usuários</li>
     </ol>
 </section>
 
@@ -35,7 +35,7 @@ Users List
         <div class="panel panel-primary ">
             <div class="panel-heading">
                 <h4 class="panel-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Users List
+                    Lista de Usuários do Solid CI
                 </h4>
             </div>
             <br />
@@ -44,12 +44,12 @@ Users List
                     <thead>
                         <tr class="filters">
                             <th>ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>User E-mail</th>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>E-mail</th>
                             <th>Status</th>
-                            <th>Created At</th>
-                            <th>Actions</th>
+                            <th>Data de criação</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,14 +66,14 @@ Users List
             						Pending
             					@endif
             				</td>
-            				<td>{!! $user->created_at->diffForHumans() !!}</td>
+            				<td>{!! date('d/m/Y', strtotime($user->created_at))!!}</td>
             				<td>
-                                <a href="{{ route('users.show', $user->id) }}"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="view user"></i></a>
+                                <a href="{{ route('users.show', $user->id) }}"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="ver"></i></a>
 
-                                <a href="{{ route('users.update', $user->id) }}"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="update user"></i></a>
+                                <a href="{{ route('users.update', $user->id) }}"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="atualizar"></i></a>
                                 
                                 @if ((Sentinel::getUser()->id != $user->id) && ($user->id != 1))
-                					<a href="{{ route('confirm-delete/user', $user->id) }}" data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="delete user"></i></a>
+                					<a href="{{ route('confirm-delete/user', $user->id) }}" data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="remover"></i></a>
                 				@endif
 
                                 

@@ -22,3 +22,12 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
+
+.filter_input {
+    width: 100% !important;
+}
+
+#history_panel .panel-heading {
+    height: 54px;
+    line-height: 34px;
+}

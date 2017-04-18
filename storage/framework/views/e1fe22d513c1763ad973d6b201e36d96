@@ -1,0 +1,98 @@
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Relatório Customizado
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php /* Page content */ ?>
+<?php $__env->startSection('content'); ?>
+	<section class="content-header">
+        <h1>Relatório de Equipamentos</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?php echo e(route('dashboard')); ?>">
+                    <i class="livicon" data-name="home" data-size="14" data-color="#000"></i> Dashboard
+                </a>
+            </li>
+            <li class="active">Relatório de Equipamento</li>
+        </ol>
+    </section>
+	
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+			<h5>Insira opções de filtro para gerar o relatório:</h5>
+			<form lass="form-horizontal" action="<?php echo e(route('relatorio_lista')); ?>">
+				<div class="col-md-4">
+					<div class="form-group">
+					    <label for="descricao1">Descrição 1</label>
+					    <input type="text" class="form-control" id="descricao1" name="descricao1" placeholder="Descrição do Equipamento">
+					 </div>
+					 
+					<div class="form-group">
+				  	<label for="grupo">Grupo</label>
+				  		<select name="grupo" class="form-control">
+				  			<option>Todos</option>
+				  			<?php foreach($grupos as $grupo): ?>
+				  				<option value="$grupo->idgrupo"><?php echo e($grupo->nome); ?></option>
+				  			<?php endforeach; ?>
+				  		</select>
+				    </div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+					    <label for="descricao2">Descrição 2</label>
+					    <input type="text" class="form-control" id="descricao2" name="descricao2" placeholder="Descrição do Equipamento">
+				    </div> 
+
+				    <div class="form-group">
+				  	<label for="grupo">Loja</label>
+				  		<select name="loja" class="form-control">
+				  			<option>Todas</option>
+				  			<?php foreach($lojas as $loja): ?>
+				  			<option value="<?php echo e($loja->idloja); ?>"><?php echo e($loja->descricao); ?></option>
+				  			<?php endforeach; ?>
+				  		</select>
+				    </div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+					    <label for="descricao3">Descrição 3</label>
+					    <input type="text" class="form-control" id="descricao3" name="descricao2" placeholder="Descrição do Equipamento">
+					</div>
+
+					<div class="form-group">
+					  	<label for="setor">Setor</label>
+					 	<select name="setor" class="form-control">
+					 			<option>Todos</option>
+					 			<?php foreach($setores as $setor): ?>
+					 				<option value="<?php echo e($setor->idsetor); ?>"><?php echo e($setor->nome); ?></option>
+					 			<?php endforeach; ?>
+					 	</select>
+				    </div>
+				</div>
+			  
+			  
+			 
+			  
+			  <button type="submit" class="btn btn-default">Buscar</button>
+			</form>
+			</div>
+		</div>
+	
+	</div>
+	
+<?php $__env->stopSection(); ?>
+
+<?php /* page level scripts */ ?>
+<?php $__env->startSection('footer_scripts'); ?>
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

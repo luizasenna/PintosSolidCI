@@ -72,7 +72,7 @@ Editar Equipamento
 						<div class="form-group">
 							<label for="datacompra" class="col-sm-2 control-label">Data da Compra</label>
 							<div class="col-sm-2">
-								<input type="text" class="form-control" id="datacompra" name="datacompra" readonly value="{{ date('d/m/Y', strtotime($entity->datacompra)) }}">
+								<input type="text" class="form-control" id="datacompra" name="datacompra" value="{{ date('d/m/Y', strtotime($entity->datacompra)) }}">
 							</div>
 							<label for="chaveserial" class="col-sm-1 control-label">Chave/Serial</label>
 							<div class="col-sm-7">
@@ -104,15 +104,45 @@ Editar Equipamento
 
 						<div class="form-group">
 							<label for="codigobarras" class="col-sm-2 control-label">Código de Barras</label>
-							<div class="col-sm-10">
+							<div class="col-sm-3">
 								<input type="text" class="form-control" id="codigobarras" name="codigobarras" value="{{ $entity->codigobarras }}">
+							</div>
+							<label for="nota" class="col-sm-1 control-label">Nota</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="nota" name="nota" value="{{ $entity->nota }}">
+							</div>
+							<label for="garantia" class="col-sm-1 control-label">Garantia</label>
+							<div class="col-sm-2">
+								<input type="text" class="form-control" id="garantiaatual" name="garantia" value="{{ date('d/m/Y', strtotime($entity->garantia))}}">
+								
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="nota" class="col-sm-2 control-label">Nota</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="nota" name="nota" value="{{ $entity->nota }}">
+							<label for="nota" class="col-sm-2 control-label">Categoria</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="idcategoria">
+									
+									@if($entity->idcategoria)
+									<option value="{{$entity->idcategoria}}">{{$entity->idcategoria}} - {{$entity->categoria->nome}} </option>
+									@else <option>---</option>
+									@endif
+									@foreach ($categorias as $categoria)
+										<option value="{{$categoria->id}}">{{$categoria->id}} - {{$categoria->nome}}</option>
+									@endforeach
+								</select>
+							</div>
+							<label for="nota" class="col-sm-1 control-label">Grupo</label>
+							<div class="col-sm-5">
+								<select class="form-control" name="idgrupo">
+									@if($entity->idgrupo)
+									<option value="{{$entity->idgrupo}}">{{$entity->grupo->nome}} </option>
+									@else <option>---</option>
+									@endif
+									@foreach ($grupos as $g)
+										<option value="{{$g->id}}">{{$g->nome}}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 
@@ -131,20 +161,23 @@ Editar Equipamento
 						</div>
 
 						<div class="form-group">
-							<label for="idfornecedor" class="col-sm-2 control-label">Fornecedor</label>
-							<div class="col-sm-2">
-								<select class="form-control" name="idfornecedor">
-									@foreach($fornecedores as $fornecedor)
-										<option value="{{ $fornecedor->id }}"
-											@if($entity->fornecedor)
-												{{ $entity->fornecedor == $fornecedor ? 'selected' : '' }}
-											@endif
-										>{{ $fornecedor->nome }}</option>
-									@endforeach
+							<label for="idloja" class="col-sm-2 control-label">Loja</label>
+							<div class="col-sm-3">
+								<select class="form-control" name="idloja">
+
+								@if($entity->idloja)
+									<option value="{{$entity->idloja}}">{{$entity->idloja}} - {{$entity->loja->descricao}} </option>
+								@else <option value="0"></option>
+								@endif
+								@foreach ($lojas as $l)
+									<option value="{{$l->id}}">{{$l->id}} - {{$l->descricao}}</option>
+								@endforeach
+
+								
 								</select>
 							</div>
 							<label for="idsetor" class="col-sm-1 control-label">Setor</label>
-							<div class="col-sm-3">
+							<div class="col-sm-6">
 								<select class="form-control" name="idsetor">
 									@foreach($setores as $setor)
 										<option value="{{ $setor->id }}"
@@ -155,8 +188,24 @@ Editar Equipamento
 									@endforeach
 								</select>
 							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="idfornecedor" class="col-sm-2 control-label">Fornecedor</label>
+							<div class="col-sm-5">
+								<select class="form-control" name="idfornecedor">
+									@foreach($fornecedores as $fornecedor)
+										<option value="{{ $fornecedor->id }}"
+											@if($entity->fornecedor)
+												{{ $entity->fornecedor == $fornecedor ? 'selected' : '' }}
+											@endif
+										>{{ $fornecedor->nome }}</option>
+									@endforeach
+								</select>
+							</div>
+							
 							<label for="idmarca" class="col-sm-1 control-label">Marca</label>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<select class="form-control" name="idmarca">
 									@foreach($marcas as $marca)
 										<option value="{{ $marca->id }}"
@@ -204,12 +253,14 @@ Editar Equipamento
 							</div>
 						</div>
 
+
 						<div class="form-group">
-							<label for="usuariolocal" class="col-sm-2 control-label">Usuário Local</label>
+							<label for="situacao" class="col-sm-2 control-label">Situação em relação à base antiga (tamborete de dados) </label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="usuariolocal" name="usuariolocal" value="{{ $entity->usuariolocal }}">
+								<textarea class="form-control" rows="3" id="situacao" name="situacao">{{ $entity->situacao }}</textarea>
 							</div>
 						</div>
+
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
@@ -238,6 +289,14 @@ Editar Equipamento
 <script type="text/javascript">
 
 	$('#datacompra').datepicker({
+		autoclose: true,
+		format: 'dd/mm/yyyy',
+		language: 'pt-BR',
+		todayBtn: 'linked',
+		todayHighlight: true,
+	});
+
+	$('#garantiaatual').datepicker({
 		autoclose: true,
 		format: 'dd/mm/yyyy',
 		language: 'pt-BR',

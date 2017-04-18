@@ -1,0 +1,209 @@
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Mostra Fornecedor
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php /* Page content */ ?>
+<?php $__env->startSection('content'); ?>
+
+<section class="content-header">
+    <h1>Mostra Fornecedor</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a href="<?php echo e(route('dashboard')); ?>">
+                <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="<?php echo e(route('fornecedor_index')); ?>">
+                Fornecedores
+            </a>
+        </li>
+        <li class="active">
+            Fornecedor <?php echo e($entity->id); ?>
+
+        </li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Código</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->id); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Nome</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->nome); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Status</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity_status[$entity->status]); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Observações</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->observacoes); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Logradouro</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->logradouro); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Número</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->numero); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">CEP</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->cep); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Complemento</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->complemento); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Bairro</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->bairro); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Cidade</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->cidade); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Estado</span>
+                </div>
+                <div class="panel-body">
+                    <?php echo e($entity->estado); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Telefone 1</span>
+                </div>
+                <div class="panel-body">
+                    (<?php echo e($entity->ddd1); ?>) <?php echo e($entity->telefone1); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Telefone 2</span>
+                </div>
+                <div class="panel-body">
+                    (<?php echo e($entity->ddd2); ?>) <?php echo e($entity->telefone2); ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">Telefone 3</span>
+                </div>
+                <div class="panel-body">
+                    (<?php echo e($entity->ddd3); ?>) <?php echo e($entity->telefone3); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php $__env->stopSection(); ?>
+
+<?php /* page level scripts */ ?>
+<?php $__env->startSection('footer_scripts'); ?>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('admin/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

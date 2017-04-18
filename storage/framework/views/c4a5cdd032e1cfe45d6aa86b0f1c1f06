@@ -1,0 +1,84 @@
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Relatório Customizado
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php /* Page content */ ?>
+<?php $__env->startSection('content'); ?>
+
+
+	<section class="content-header">
+        <h1>Relatório de Equipamentos</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?php echo e(route('dashboard')); ?>">
+                    <i class="livicon" data-name="home" data-size="14" data-color="#000"></i> Dashboard
+                </a>
+            </li>
+            <li class="active">Relatório de Equipamento</li>
+        </ol>
+    </section>
+	
+	<div class="content">
+
+		<div class="row row-fluid row-horizon" >
+			<div class="col-md-12">
+			<div class="panel panel-primary table-responsive">
+			  <div class="panel-heading">Relatório</div>
+			  <div class="panel-body">
+			   
+			  <div class="well">Filtros Selecionados</div>
+
+			  <table class="table table-stripped table-responsive">
+			  		<th>Descrição</th>
+			  		<th>Marca</th>
+			  		<th>Loja</th>
+			  		<th>Valor</th>
+			  		<th>Data Compra</th>
+			  		<th>Chave serial</th>
+			  		<th>Nota</th>
+			  		<th>Modelo</th>
+			  		<th>Características</th>
+			  		<th>Usuário</th>
+			  		<th>Status</th>
+			  		<th>Observação</th>
+			  	</th>  
+			  	<?php foreach($equipamentos as $equipamento): ?>
+			  		<tr>
+			  			<td><?php echo e($equipamento->descricao); ?></td>
+			  			<td><?php echo e($equipamento->idmarca); ?></td>
+			  			<td><?php echo e($equipamento->idloja); ?></td>
+			  			<td><?php echo e($equipamento->idsetor); ?></td>
+			  			<td> R$ <?php echo e($equipamento->valorcompra); ?></td>
+			  			<td><?php echo e($equipamento->datacompra); ?></td>
+			  			<td><?php echo e($equipamento->chaveserial); ?></td>
+			  			<td><?php echo e($equipamento->nota); ?></td>
+			  			<td><?php echo e($equipamento->modelo); ?></td>
+			  			<td><?php echo e($equipamento->caracteristicas); ?></td>
+			  			<td><?php echo e($equipamento->usuariolocal); ?></td>
+			  			<td><?php echo e($equipamento->status); ?></td>
+			  			<td><?php echo e($equipamento->observacoes); ?></td>
+			  		</tr>
+		 	    <?php endforeach; ?>
+		 	   </table> 
+		 	   </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
+<?php $__env->stopSection(); ?>
+
+<?php /* page level scripts */ ?>
+<?php $__env->startSection('footer_scripts'); ?>
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

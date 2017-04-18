@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>500 Internal Error | Welcome to Josh Frontend</title>
+    <title>500 Internal Error | Pintos Intranet</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- global level js -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
@@ -20,10 +20,10 @@
                         500
                     </h1>
                     <h3>
-                        Thats an error.
-                        <br>There was an error. Please Try again later. Thats all we know
+                        Ops... 
+                        <br>Um erro foi encontrado. <br/> Tente novamente mais tarde. 
                     </h3>
-                        <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
+                        <a href="{{ route('home') }}" class="btn btn-primary">Início</a>
                     <br>
                 </div>
             </div>
@@ -33,8 +33,8 @@
     <script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <!--livicons-->
-    <script src="{{ asset('assets/vendors/livicons/minified/raphael-min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/livicons/minified/livicons-1.4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/raphael-min.js') }}"></script>
+    <script src="{{ asset('assets/js/livicons-1.4.min.js') }}"></script>
     <!-- end of global js -->
     <!-- begining of page level js-->
     <script>

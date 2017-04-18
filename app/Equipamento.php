@@ -16,6 +16,7 @@ class Equipamento extends Model
         'descricao',
         'chaveserial',
         'idmarca',
+        'idloja',
         'idsetor',
         'voltagem',
         'nota',
@@ -26,10 +27,12 @@ class Equipamento extends Model
         'status',
         'caracteristicas',
         'usuariolocal',
+        'situacao', 
+        'idgrupo'
     ];
 
     protected $table = 'equipamentos';
-    protected $dates = ['created_at', 'updated_at', 'datacompra'];
+    protected $dates = ['created_at', 'updated_at', 'datacompra', 'garantia'];
     // protected $dateFormat = ''
 
 
@@ -45,6 +48,10 @@ class Equipamento extends Model
         return $this->belongsTo('App\Setor', 'idsetor');
     }
 
+    public function loja() {
+        return $this->belongsTo('App\Loja', 'idloja');
+    }
+
     public function orcador() {
         return $this->belongsTo('App\User', 'idorcador');
     }
@@ -56,4 +63,18 @@ class Equipamento extends Model
     public function cadastro() {
         return $this->belongsTo('App\User', 'idcadastro');
     }
+
+    public function historico() {
+        return $this->hasMany('App\HistoricoEquipamento', 'idequipamento');
+    }
+
+    public function categoria() {
+        return $this->belongsTo('App\Categoria', 'idcategoria');
+    }
+
+    public function grupo() {
+        return $this->belongsTo('App\Grupo', 'idgrupo');
+    }
+
+
 }

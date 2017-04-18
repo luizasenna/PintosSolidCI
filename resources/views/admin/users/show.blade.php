@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-View User Details
+Ver Detalhes do Usuário
 @parent
 @stop
 
@@ -18,18 +18,18 @@ View User Details
 @section('content')
     <section class="content-header">
         <!--section starts-->
-        <h1>User Profile</h1>
+        <h1>Perfil do Usuário</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('dashboard') }}">
                     <i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
-                    Dashboard
+                    Painel
                 </a>
             </li>
             <li>
-                <a href="#">Users</a>
+                <a href="#">Usuários</a>
             </li>
-            <li class="active">User Profile</li>
+            <li class="active">Perfil do usuário</li>
         </ol>
     </section>
     <!--section ends-->
@@ -40,18 +40,14 @@ View User Details
                     <li class="active">
                         <a href="#tab1" data-toggle="tab">
                             <i class="livicon" data-name="user" data-size="16" data-c="#000" data-hc="#000" data-loop="true"></i>
-                            User Profile</a>
+                            Perfil do usuário</a>
                     </li>
                     <li>
                         <a href="#tab2" data-toggle="tab">
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            Change Password</a>
+                            Mudar Senha</a>
                     </li>
-                    <li>
-                        <a href="{{ URL::to('admin/user_profile') }}" >
-                            <i class="livicon" data-name="gift" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            Advanced User Profile</a>
-                    </li>
+                  
 
                 </ul>
                 <div  class="tab-content mar-top">
@@ -62,7 +58,7 @@ View User Details
                                     <div class="panel-heading">
                                         <h3 class="panel-title">
 
-                                            User Profile
+                                           Perfil do(a) usuário(a)
                                         </h3>
 
                                     </div>
@@ -82,86 +78,51 @@ View User Details
                                                     <table class="table table-bordered table-striped" id="users">
 
                                                         <tr>
-                                                            <td>@lang('users/title.first_name')</td>
+                                                            <td>Nome</td>
                                                             <td>
                                                                 {{ $user->first_name }}
                                                             </td>
 
                                                         </tr>
                                                         <tr>
-                                                            <td>@lang('users/title.last_name')</td>
+                                                            <td>Sobrenome</td>
                                                             <td>
                                                                 {{ $user->last_name }}
                                                             </td>
 
                                                         </tr>
                                                         <tr>
-                                                            <td>@lang('users/title.email')</td>
+                                                            <td>Email</td>
                                                             <td>
                                                                 {{ $user->email }}
                                                             </td>
                                                         </tr>
+                                                        
                                                         <tr>
-                                                            <td>
-                                                                @lang('users/title.gender')
-                                                            </td>
-                                                            <td>
-                                                                {{ $user->gender }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.dob')</td>
+                                                            <td>Nascimento</td>
                                                             <td>
                                                                 {{ $user->dob }}
                                                             </td>
                                                         </tr>
+                                                        
+                                                       
                                                         <tr>
-                                                            <td>@lang('users/title.country')</td>
-                                                            <td>
-                                                                {{ $user->country }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.state')</td>
-                                                            <td>
-                                                                {{ $user->state }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.city')</td>
-                                                            <td>
-                                                                {{ $user->city }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.address')</td>
-                                                            <td>
-                                                                {{ $user->address }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.postal')</td>
-                                                            <td>
-                                                                {{ $user->postal }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.status')</td>
+                                                            <td>Status</td>
                                                             <td>
 
                                                                 @if($user->deleted_at)
-                                                                    Deleted
+                                                                    Deletado
                                                                 @elseif($user->activated)
-                                                                    Activated
+                                                                    Ativado
                                                                 @else
-                                                                    Pending
+                                                                    Pendente
                                                                 @endif
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>@lang('users/title.created_at')</td>
+                                                            <td>Criado em</td>
                                                             <td>
-                                                                {!! $user->created_at->diffForHumans() !!}
+                                                                {!! date('d/m/Y', strtotime($user->created_at)) !!}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -180,7 +141,7 @@ View User Details
                                     <div class="form-body">
                                         <div class="form-group">
                                             <label for="inputpassword" class="col-md-3 control-label">
-                                                Password
+                                                Senha
                                                 <span class='require'>*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -188,13 +149,13 @@ View User Details
                                                             <span class="input-group-addon">
                                                                 <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
-                                                    <input type="password"  id="inputpassword" placeholder="Password" class="form-control"/>
+                                                    <input type="password"  id="inputpassword" placeholder="Senha" class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputnumber" class="col-md-3 control-label">
-                                                Confirm Password
+                                                Confirme a senha
                                                 <span class='require'>*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -202,18 +163,17 @@ View User Details
                                                             <span class="input-group-addon">
                                                                 <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
-                                                    <input type="password"  id="inputnumber"placeholder="Password" class="form-control"/>
+                                                    <input type="password"  id="inputnumber"placeholder="Senha" class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-actions">
                                         <div class="col-md-offset-3 col-md-9">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
                                             &nbsp;
-                                            <button type="button" class="btn btn-danger">Cancel</button>
-                                            &nbsp;
-                                            <input type="reset" class="btn btn-default hidden-xs" value="Reset"></div>
+                                            <button type="button" class="btn btn-danger">Cancelar</button>
+                                            
                                     </div>
                                 </form>
                             </div>

@@ -1,0 +1,38 @@
+
+
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Blank Page
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php /* Page content */ ?>
+<?php $__env->startSection('content'); ?>
+
+<section class="content-header">
+                <h1>Blank page</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="<?php echo e(route('dashboard')); ?>">
+                            <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>Pages</li>
+                    <li class="active">Blank page</li>
+                </ol>
+            </section>
+            <section class="content"></section>
+
+        
+    <?php $__env->stopSection(); ?>
+
+<?php /* page level scripts */ ?>
+<?php $__env->startSection('footer_scripts'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin/layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
