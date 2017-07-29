@@ -58,7 +58,6 @@ class EquipamentoController extends MainController
 			$entities = $entities->where(function($consulta) use ($modelo_filter){
 				$consulta->where('modelo','like', '%' . $modelo_filter . '%')
 					     ->orWhere('caracteristicas','like', '%' . $modelo_filter . '%');
-				
 			});   
 		}
 	
