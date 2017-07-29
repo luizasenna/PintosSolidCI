@@ -380,7 +380,7 @@
     </a>
     <div class=" col-md-5 col-sm-1 col-sm-1 "> </div>
      <div class=" col-md-4 col-sm-10 col-sm-10 text-center pull-center">
-         Feito com <span aria-hidden="true" class="glyphicon glyphicon-heart" style="color:red;"></span>  pelo Centro de Informática </div>
+         Feito com <span aria-hidden="true" class="glyphicon glyphicon-heart" style="color:red;"></span>  pelo Centro de Informática  - Versão 2.0 - Server pintos.com.br</div>
     <div class="col-md-3 col-sm-1 col-sm-1"></div>
     <!-- global js -->
     <script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>

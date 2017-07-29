@@ -1,15 +1,14 @@
-<?php namespace Cviebrock\EloquentSluggable;
+<?php
 
-/**
- * Interface SluggableInterface
- *
- * @package Cviebrock\EloquentSluggable
- */
-interface SluggableInterface
-{
-    public function getSlug();
+namespace Cviebrock\EloquentSluggable;
 
-    public function sluggify($force = false);
 
-    public function resluggify();
+interface SluggableInterface {
+
+	public function getSlug();
+
+	public function sluggify($force=false);
+
+	public function resluggify();
+
 }

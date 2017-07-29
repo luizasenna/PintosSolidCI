@@ -53,7 +53,15 @@ Mostra Equipamento
                             </tr>
                             <tr>
                                 <th>Localização Atual</th>
-                                <td> @if($entity->setor)
+                                <td><b>Loja: </b>
+                                @if($entity->loja)
+                                    {{$entity->idloja}}
+                                    {{ $entity->loja->descricao }}
+                                @else
+                                    Loja não encontrada
+                                @endif    
+                                <b> - Setor: </b>
+                                @if($entity->setor)
                                     {{ $entity->setor->nome }}
                                 @else
                                     Setor não encontrado

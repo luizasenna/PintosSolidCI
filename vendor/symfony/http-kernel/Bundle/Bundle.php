@@ -127,7 +127,7 @@ abstract class Bundle extends ContainerAware implements BundleInterface
     /**
      * Returns the bundle parent name.
      *
-     * @return string The Bundle parent name it overrides or null if no parent
+     * @return string|null The Bundle parent name it overrides or null if no parent
      */
     public function getParent()
     {
@@ -166,6 +166,10 @@ abstract class Bundle extends ContainerAware implements BundleInterface
             return;
         }
 
+        if (!class_exists('Symfony\Component\Finder\Finder')) {
+            throw new \RuntimeException('You need the symfony/finder component to register bundle commands.');
+        }
+
         $finder = new Finder();
         $finder->files()->name('*Command.php')->in($dir);
 
@@ -173,7 +177,7 @@ abstract class Bundle extends ContainerAware implements BundleInterface
         foreach ($finder as $file) {
             $ns = $prefix;
             if ($relativePath = $file->getRelativePath()) {
-                $ns .= '\\'.strtr($relativePath, '/', '\\');
+                $ns .= '\\'.str_replace('/', '\\', $relativePath);
             }
             $class = $ns.'\\'.$file->getBasename('.php');
             if ($this->container) {

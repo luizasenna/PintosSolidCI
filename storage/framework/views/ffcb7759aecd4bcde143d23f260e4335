@@ -1,0 +1,32 @@
+<?php /* Page title */ ?>
+<?php $__env->startSection('title'); ?>
+Solid - Base de Equipamentos do Centro de Informática da Pintos
+@parent
+<?php $__env->stopSection(); ?>
+
+<?php /* page level styles */ ?>
+<?php $__env->startSection('header_styles'); ?>
+    <!--page level css starts-->
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/frontend/tabbular.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/frontend/jquery.circliful.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/vendors/owl-carousel/owl.carousel.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/vendors/owl-carousel/owl.theme.css')); ?>">
+    <!--end of page level css-->
+<?php $__env->stopSection(); ?>
+
+<?php /* content */ ?>
+<?php $__env->startSection('content'); ?>
+   <div class="row">
+	  <div class="col-lg-4 col-xs-4" style="margin-top:400px;">
+           
+     </div> 
+     <div class="col-lg-4 col-xs-4" style="margin-top:300px;background-color:#555;">
+           <a href="admin"><center><img src="<?php echo e(asset('assets/imagens/logopeq.png')); ?>" height="85%" alt="logo">
+           <h4 style="color:#fff;">Entrar</h4></center></a>
+     </div>
+   </div>
+ 
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

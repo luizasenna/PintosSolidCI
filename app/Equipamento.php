@@ -68,6 +68,12 @@ class Equipamento extends Model
         return $this->hasMany('App\HistoricoEquipamento', 'idequipamento');
     }
 
+
+    public function latesttHistorico()
+    {
+       return $this->hasOne('App\HistoricoEquipamento', 'idequipamento')->latest();
+    }
+
     public function categoria() {
         return $this->belongsTo('App\Categoria', 'idcategoria');
     }

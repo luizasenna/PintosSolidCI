@@ -1,116 +1,81 @@
 <?php namespace Cviebrock\EloquentSluggable;
 
-use Illuminate\Database\Console\Migrations\BaseCommand;
-use Illuminate\Foundation\Composer;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
-/**
- * Class SluggableTableCommand
- *
- * @package Cviebrock\EloquentSluggable
- */
-class SluggableTableCommand extends BaseCommand
-{
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
-    protected $name = 'sluggable:table';
+class SluggableTableCommand extends Command {
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a migration for the Sluggable database columns';
+	/**
+	 * The console command name.
+	 *
+	 * @var string
+	 */
+	protected $name = 'sluggable:table';
 
-    /**
-     * @var SluggableMigrationCreator
-     */
-    protected $creator;
+	/**
+	 * The console command description.
+	 *
+	 * @var string
+	 */
+	protected $description = 'Create a migration for the Sluggable database columns';
 
-    /**
-     * @var \Illuminate\Foundation\Composer
-     */
-    protected $composer;
+	/**
+	 * Execute the console command.
+	 *
+	 * @return void
+	 */
+	public function fire()
+	{
+		$fullPath = $this->createBaseMigration();
 
-    /**
-     * Create a new migration sluggable instance.
-     *
-     * @param SluggableMigrationCreator $creator
-     * @param Composer $composer
-     */
-    public function __construct(
-      SluggableMigrationCreator $creator,
-      Composer $composer
-    ) {
-        parent::__construct();
+		file_put_contents($fullPath, $this->getMigrationStub());
 
-        $this->creator = $creator;
-        $this->composer = $composer;
-    }
+		$this->info('Migration created successfully!');
 
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
-    public function fire()
-    {
-        $table = $this->input->getArgument('table');
+		$this->call('dump-autoload');
+	}
 
-        $column = $this->input->getArgument('column');
+	/**
+	 * Create a base migration file for the model.
+	 *
+	 * @return string
+	 */
+	protected function createBaseMigration()
+	{
+		$name = 'add_sluggable_columns';
 
-        $name = 'add_' . $column . '_to_' . $table . '_table';
+		$path = $this->laravel['path'].'/database/migrations';
 
-        // Now we are ready to write the migration out to disk. Once we've written
-        // the migration out, we will dump-autoload for the entire framework to
-        // make sure that the migrations are registered by the class loaders.
-        $this->writeMigration($name, $table, $column);
+		return $this->laravel['migration.creator']->create($name, $path);
+	}
 
-        $this->composer->dumpAutoloads();
-    }
+	/**
+	 * Get the contents of the sluggable migration stub.
+	 *
+	 * @return string
+	 */
+	protected function getMigrationStub()
+	{
+		$stub = file_get_contents(__DIR__.'/stubs/migration.stub');
 
-    /**
-     * Write the migration file to disk.
-     *
-     * @param  string $name
-     * @param  string $table
-     * @param  bool $column
-     * @return string
-     */
-    protected function writeMigration($name, $table, $column)
-    {
-        $path = $this->getMigrationPath();
+		return str_replace(
+			array('sluggable_table', 'sluggable_column'),
+			array($this->argument('table'), $this->argument('column')),
+			$stub
+		);
+	}
 
-        $this->creator->setColumn($column);
+	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments()
+	{
+		return array(
+			array('table',  InputArgument::REQUIRED, 'The name of your sluggable table.'),
+			array('column', InputArgument::OPTIONAL, 'The name of your slugged column (defaults to "slug").', 'slug'),
+		);
+	}
 
-        $file = pathinfo($this->creator->create($name, $path, $table),
-          PATHINFO_FILENAME);
-
-        $this->line("<info>Created Migration:</info> $file");
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-          [
-            'table',
-            InputArgument::REQUIRED,
-            'The name of your sluggable table.'
-          ],
-          [
-            'column',
-            InputArgument::OPTIONAL,
-            'The name of your slugged column (defaults to "slug").',
-            'slug'
-          ],
-        ];
-    }
 }

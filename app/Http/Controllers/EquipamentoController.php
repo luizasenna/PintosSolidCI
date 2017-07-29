@@ -42,14 +42,27 @@ class EquipamentoController extends MainController
         $setor_filter = Request::exists('setor_filter') ? Request::input('setor_filter') : '';
         $nota_filter = Request::exists('nota_filter') ? Request::input('nota_filter') : '';
         $grupo_filter = Request::exists('grupo_filter') ? Request::input('grupo_filter') : '';
+		$loja_filter = Request::exists('loja_filter') ? Request::input('loja_filter') : '';
+		$modelo_filter = Request::exists('modelo_filter') ? Request::input('modelo_filter') : '';
 
         $setores = Setor::where('status', '=', 0)->orderBy('nome', 'asc')->get();
         $categorias = Categoria::where('status', '=', 0)->orderBy('nome', 'asc')->get();
         $grupos = Grupo::where('status', '=', 0)->orderBy('nome', 'asc')->get();
+		$lojas = Loja::where('status','=',0)->orderBy('id', 'asc')->get();
 
 
         $entities = Equipamento::where('descricao', 'LIKE', '%'.$desc_filter.'%')->where('status', '=', 0)->orderBy('id', 'desc');
-
+		
+		if ($modelo_filter != '') {
+			
+			$entities = $entities->where(function($consulta) use ($modelo_filter){
+				$consulta->where('modelo','like', '%' . $modelo_filter . '%')
+					     ->orWhere('caracteristicas','like', '%' . $modelo_filter . '%');
+				
+			});   
+		}
+	
+		
         if ($serial_filter) {
             $entities = $entities->where('chaveserial','like', '%' . $serial_filter . '%');
         }
@@ -66,6 +79,11 @@ class EquipamentoController extends MainController
             $entities = $entities->where('idgrupo', '=', $grupo_filter); 
         }
 
+
+		if ($loja_filter != '') {
+					$entities = $entities->where('idloja', '=', $loja_filter); 
+				}
+		
         $entities = $entities->paginate(15);
 
         return view('admin.equipamento.index', [
@@ -75,10 +93,13 @@ class EquipamentoController extends MainController
             'setor_filter' => $setor_filter,
             'nota_filter' => $nota_filter,
             'grupo_filter' => $grupo_filter,
+			'loja_filter' => $loja_filter,
+			'modelo_filter' => $modelo_filter,
             'setores' => $setores,
             'categorias' => $categorias,
             'grupos' => $grupos,
             'hist' => self::hist,
+			'lojas'=> $lojas,
             'entity_status' => self::entity_status
         ]);
     }
