@@ -762,7 +762,7 @@
 
      <div class=" col-md-4 col-sm-10 col-sm-10 text-center pull-center">
 
-         Feito com <span aria-hidden="true" class="glyphicon glyphicon-heart" style="color:red;"></span>  pelo Centro de Informática  - Versão 2.1 - Server pintos.com.br - Release 29/07/2017 </div>
+         Feito com <span aria-hidden="true" class="glyphicon glyphicon-heart" style="color:red;"></span>  pelo Centro de Informática  - Versão 2.1.3 - Server pintos.com.br - Release 29/07/2017 </div>
 
     <div class="col-md-3 col-sm-1 col-sm-1"></div>
 
