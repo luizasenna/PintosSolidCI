@@ -764,6 +764,19 @@
 
          Feito com <span aria-hidden="true" class="glyphicon glyphicon-heart" style="color:red;"></span>  pelo Centro de Informática  - Versão 2.1.3 - Server pintos.com.br - Release 29/07/2017 </div>
 
+   <!-- Analytics Solid CI-->
+   	<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-46066108-4', 'auto');
+		  ga('send', 'pageview');
+
+	</script>
+    <!-- Analytics Solid CI-->
+   
     <div class="col-md-3 col-sm-1 col-sm-1"></div>
 
     <!-- global js -->
