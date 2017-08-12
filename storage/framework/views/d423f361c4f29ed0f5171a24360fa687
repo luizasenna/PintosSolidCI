@@ -266,6 +266,7 @@ Mostra Equipamento
                             <th>Usuário</th>
                             <th>Status</th>
                             <th>Data de Criação</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -281,6 +282,8 @@ Mostra Equipamento
                                 <td><?php echo e($entry->usuario ? $entry->usuario->first_name : '--'); ?></td>
                                 <td><?php if($entry->status): ?><?php echo e(array_get($hist, $entry->status, '--')); ?><?php endif; ?> </td>
                                 <td><?php echo e(date("d/m/Y", strtotime($entry->created_at))); ?></td>
+                                <td><a href="<?php echo e(route('historico_delete', $entry->id)); ?>" class="confirmation" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
                             </tr>
                         <?php endforeach; if ($__empty_1): ?>
                             <tr>
@@ -391,6 +394,17 @@ Mostra Equipamento
     });
 
 </script>
+
+<script type="text/javascript">
+
+    $('.confirmation').on('click', function () {
+
+        return confirm('Tem certeza que deseja apagar este Hisṍrico do Solid? Não há volta');
+
+    });
+
+</script>
+
 <?php $__env->stopSection(); ?>
 
 

@@ -58,4 +58,15 @@ class HistoricoEquipamentoController extends MainController
         //return redirect()->action('EquipamentoController@show')->with('id', $id);
         return redirect()->intended('admin/equipamento/mostra/'.$id)->withInput()->with('status' , 'Histórico alterado');
     }
+
+     public function delete($id)
+    {
+    	$historico = HistoricoEquipamento::findOrFail($id);
+    	$equipamento = $historico->idequipamento;
+        HistoricoEquipamento::findOrFail($id)->delete();
+
+        return redirect()->intended('admin/equipamento/mostra/'.$equipamento)->with('status', 'Histórico de Equipamento removido com sucesso');
+    }
+
+
 }

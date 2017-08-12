@@ -253,6 +253,7 @@ Mostra Equipamento
                             <th>Usuário</th>
                             <th>Status</th>
                             <th>Data de Criação</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -266,6 +267,8 @@ Mostra Equipamento
                                 <td>{{ $entry->usuario ? $entry->usuario->first_name : '--' }}</td>
                                 <td>@if($entry->status){{ array_get($hist, $entry->status, '--') }}@endif </td>
                                 <td>{{ date("d/m/Y", strtotime($entry->created_at))}}</td>
+                                <td><a href="{{ route('historico_delete', $entry->id) }}" class="confirmation" title="Deletar"><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -375,5 +378,16 @@ Mostra Equipamento
     });
 
 </script>
+
+<script type="text/javascript">
+
+    $('.confirmation').on('click', function () {
+
+        return confirm('Tem certeza que deseja apagar este Hisṍrico do Solid? Não há volta');
+
+    });
+
+</script>
+
 @stop
 
